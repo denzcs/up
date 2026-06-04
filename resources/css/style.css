@@ -1,0 +1,349 @@
+* {
+    transition: .3s;
+    margin: 0;
+    padding: 0 auto;
+    color: #375B6D;
+    
+}
+
+header {
+    height: 100px;
+    padding: 10px 0;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 2px #000;
+
+}
+
+footer {
+    padding: 20px 0;
+    background: #7CD2FD;
+    background: linear-gradient(90deg, rgba(124, 210, 253, 1) 0%, rgba(112, 168, 224, 1) 40%, rgba(89, 129, 222, 1) 73%, rgba(164, 89, 222, 1) 100%);
+}
+
+footer span {
+    color: #fff;
+}
+
+.btn-fill, .btn-outline, .filter, .category-card, .cardcol, .logo a, .dropdown-usermenu-item{
+    text-decoration: none;
+}
+.filters {
+    padding: 5px 10px;
+    background-color: #f1f5f9;
+    border-radius: 10px;
+    width: auto;
+}
+
+.filter {
+    margin-right: 10px;
+}
+
+.filter span {
+    border-bottom: 1px solid #000;
+}
+
+.filter:hover {
+    margin: 0 15px;
+}
+
+.filter:hover span {
+    border: none;
+}
+.btn-fill, .btn-outline {
+    padding: .375rem .75rem;
+    border-radius: .375rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+.btn-outline {
+    border: 2px solid #67b7df;
+    color: #62cbff;
+    transition: .3s;
+}
+
+.btn-outline:hover,
+.category-card:hover {
+    background: #67b7df;
+    color: #fff;
+}
+
+.btn-fill {
+    background: #67b7df;
+    border: 2px solid #67b7df;
+    color: #fff;
+}
+
+
+
+.btn-fill:hover {
+    background: none;
+    border: 2px solid #67b7df;
+    color: #62cbff;
+}
+
+header .btn-outline, header .btn-fill {
+    margin-right: 15px;
+    transition: .5s;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+section {
+    padding: 100px 0;
+    background: #7CD2FD;
+    background: linear-gradient(90deg, rgba(124, 210, 253, 1) 0%, rgba(112, 168, 224, 1) 40%, rgba(89, 129, 222, 1) 73%, rgba(164, 89, 222, 1) 100%);
+}
+
+section h1 {
+    color: #fff;
+}
+
+section h2 {
+    color: #F3FF26;
+
+}
+
+.mainContent {
+    padding: 50px 0;
+}
+
+.category-card {
+    padding: 15px 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 2px solid #67b7df;
+    color: #62cbff;
+    margin: 0 0 15px 0;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.product-count,
+.product-category {
+    background-color: #F1F5F9;
+    margin-left: 10px;
+    margin-top: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.product-category {
+    background-color: #7CD2FD;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.cardcol {
+    color: #2a5d77;
+}
+
+.cardcol img {
+    height: 250px;
+    width: 100%;
+
+}
+
+.card .btn-fill {
+    width: 100%;
+}
+
+.userbtn {
+    padding: 5px 10px;
+    background-color: #E2E8F0;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.userbar {
+    position: relative;
+    margin-left: 15px;
+}
+
+.droparrow {
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+.drop-username {
+    margin-left: 5px;
+}
+
+.dropdown-usermenu {
+    position: absolute;
+    margin-top: 5px;
+    top: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    width: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.dropdown-usermenu-item {
+    height: 50px;
+    padding: 10px 20px;
+    border-bottom: 2px solid #f1f5f9;
+    z-index: 1;
+}
+
+.dropdown-usermenu-item:last-child {
+    border: none;
+}
+
+.dropdown-usermenu-item:hover {
+    background-color: #E2E8F0;
+    padding-left: 25px;
+    border-radius: 0 0 10px 10px;
+}
+
+.userbar:hover .dropdown-usermenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.cart {
+    position: relative;
+}
+
+.cartCount {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 40%;
+    background-color: #ff4d4d;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.colform {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 30px 25px;
+    height: auto;
+}
+
+.colform img {
+    border-radius: 10px;
+    margin-right: 25px;
+    max-width: 100%;
+    height: 450px;
+}
+
+.productimg {
+    border-radius: 20px 0 20px 20px;
+}
+
+.aboutProduct {
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 4px 6px -5px rgba(0, 0, 0, 0.1);
+    padding: 30px 25px 50px 0px;
+}
+
+.colformprice {
+    height: 50%;
+    width: 75%;
+}
+
+.price {
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.profile-banner {
+    background: #7CD2FD;
+    background: linear-gradient(90deg, rgba(124, 210, 253, 1) 0%, rgba(112, 168, 224, 1) 40%, rgba(89, 129, 222, 1) 73%, rgba(164, 89, 222, 1) 100%);
+    border-radius: 20px;
+    padding: 50px 50px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    border: 5px solid #A0D7FF;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #76C6FF;
+    color: #375B6D;
+    margin-right: 20px;
+}
+
+.user-role span{
+    font-size: 18px;
+    margin: 0;
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #3436524b;
+    filter: drop-shadow(0 4px 6px -5px rgba(0, 0, 0, 0.1));
+    border-radius: 20px;
+    color: #fff;
+}
+
+.profile-content-title h2{
+    color: #fff;
+    filter: drop-shadow(0 4px 6px -5px rgba(0, 0, 0, 0.1));
+}
+
+.email {
+    color: #fff;
+    filter: drop-shadow(0 4px 6px -5px rgba(0, 0, 0, 0.1));
+}
+
+.cartstatistic-content-item, .order-list-content-item{
+    padding: 16px;
+    background-color: #F1F5F9;
+    border-radius: 12px;
+}
+
+.cartstatistic-content-item-ico{
+    width: 52px;
+    height: 52px;
+    background-color: #7CD2FD;
+    border-radius: 12px;
+    fill: #375B6D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px;
+}
+
+.order-list-content-item-ico img{
+    width: 52px;
+    height: 52px;
+}
+
+.profile-content-title{
+    padding: 0 0 10px 0;
+    border-bottom: 2px solid #F1F5F9;
+}
+
+.order-status, .order-status-succes, .order-status-declined{
+    margin-left: 10px;
+    background-color: #7CD2FD;
+    padding: 2px 5px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 12px;
+}
+
+.order-status-succes {
+    background-color: #57ce7b;
+}
+
+.order-status-declined{
+    background-color: #f34343;
+}

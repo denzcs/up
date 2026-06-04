@@ -16,7 +16,7 @@
         :server="server"
         :user="user"
     />
-    <AdminPage
+    <!-- <AdminPage
         v-if="page == 'AdminPage'"
         :server="server"
         :changePage="changePage"
@@ -43,7 +43,7 @@
         :PUBLIC="PUBLIC"
         :changePage="changePage"
         :pageId="pageId"
-    />
+    /> -->
     <FooterComponent />
 </template>
 <script>
