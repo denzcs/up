@@ -50,11 +50,7 @@
 import FooterComponent from './components/FooterComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import HomePage from './pages/HomePage.vue';
-import NavBarComponent from './components/NavBarComponent.vue';
-import CategoriePage from './pages/CategoriePage.vue';
-import AdminPage from './pages/AdminPage.vue';
-import ProfilePave from './pages/ProfilePave.vue';
-import UserPage from './pages/UserPage.vue';
+
 
 export default {
     name: 'App',
@@ -130,13 +126,8 @@ export default {
     },
     components: {
         HeaderComponent,
-        NavBarComponent,
         HomePage,
         FooterComponent,
-        CategoriePage,
-        AdminPage,
-        ProfilePave,
-        UserPage,
     },
     mounted() {
         if (localStorage.getItem('token')) {
