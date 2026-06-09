@@ -1,14 +1,15 @@
 <template>
     <h3 class="text-center">Авторизация</h3>
-    <label for="username">Логин</label>
+    <label for="email">Email</label>
     <input
         type="text"
         class="form-control mb-3"
-        name="username"
-        v-model="username"
+        name="email"
+        placeholder="email@example.com"
+        v-model="email"
     />
-    <p class="red" v-if="errors.username">
-        {{ errors.username.join('. ') }}
+    <p class="red" v-if="errors.email">
+        {{ errors.email.join('. ') }}
     </p>
     <label for="password">Пароль</label>
     <input
@@ -27,7 +28,7 @@ export default {
     name: 'AuthComponent',
     data() {
         return {
-            username: null,
+            email: null,
             password: null,
             errors: {},
         };
@@ -36,7 +37,7 @@ export default {
     methods: {
         login() {
             let formdata = new FormData();
-            if (this.username) formdata.append('username', this.username);
+            if (this.email) formdata.append('email', this.email);
             if (this.password) formdata.append('password', this.password);
 
             this.server('login', 'POST', formdata)

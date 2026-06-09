@@ -31,21 +31,16 @@
                     class="col-12 d-flex align-items-center justify-content-center mb-5"
                 >
                     <span class="fs-3 fw-bold">
-                        @isset($productCategorie) @foreach ($categories as
-                        $categorie) @if
-                        ($categorie->id==$productCategorie->categorie_id)
-                        $categorie->category
-                        @endif @endforeach @else Все товары @endisset
                     </span>
                     <span class="product-count fw-bold">{{
-                        count($products)
+                        
                     }}</span>
                 </div>
                 <div class="col-12 text-break">
                     <form action="sortBy" method="get">
                         <div class="filters d-flex justify-content-around">
                             <a
-                                href="{{ isset($productCategorie)?route('sortByPriceAscCat', $productCategorie->categorie_id):route('sortByPriceAsc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Цена (по возрастанию)</span>
                                 <svg
@@ -74,7 +69,7 @@
                                 </svg>
                             </a>
                             <a
-                                href="{{ isset($productCategorie)?route('sortByPriceDescCat', $productCategorie->categorie_id):route('sortByPriceDesc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Цена (по убыванию)</span>
                                 <svg
@@ -101,7 +96,7 @@
                                 </svg>
                             </a>
                             <a
-                                href="{{ isset($productCategorie)?route('sortByNewestAscCat', $productCategorie->categorie_id):route('sortByNewestAsc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Новые</span>
                                 <svg
@@ -129,7 +124,7 @@
                                 </svg>
                             </a>
                             <a
-                                href="{{ isset($productCategorie)?route('sortByNewestDescCat', $productCategorie->categorie_id):route('sortByNewestDesc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Старые</span>
                                 <svg
@@ -157,7 +152,7 @@
                                 </svg>
                             </a>
                             <a
-                                href="{{ isset($productCategorie)?route('sortByNameDescCat', $productCategorie->categorie_id):route('sortByNameDesc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Наименование</span>
                                 <svg
@@ -186,7 +181,7 @@
                                 </svg>
                             </a>
                             <a
-                                href="{{ isset($productCategorie)?route('sortByNameAscCat', $productCategorie->categorie_id):route('sortByNameAsc') }}"
+                                href=""
                                 class="text-reset filter"
                                 ><span>Наименование</span>
                                 <svg
@@ -219,15 +214,15 @@
                 </div>
             </div>
             <div class="row">
-                @isset($products) @foreach($products as $product)
+                
                 <div class="col-md-6 col-lg-4 col-12 mb-3">
                     <a
-                        href="{{ route('productPage', $product) }}"
+                        href=""
                         class="cardcol"
                     >
                         <div class="card">
                             <img
-                                src="{{asset($product->image)}}"
+                                src=""
                                 class="card-img-top object-fit-fill"
                                 alt="..."
                             />
@@ -240,7 +235,7 @@
                                         <h4
                                             class="fw-bold text-break text-reset"
                                         >
-                                            $product->name
+                                            product->name
                                         </h4>
                                         <div class="product-category">
                                             <span class="fw-semibold">
@@ -257,18 +252,18 @@
                                     >
                                         <span
                                             class="fs-3 fw-semibold text-reset"
-                                            >$product->price руб</span
+                                            >product->price руб</span
                                         >
                                         <div class="product-category">
                                             <span class="fw-semibold"
-                                                > $product->quantity
+                                                > product->quantity
                                                 шт.</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                                 <a
-                                    href="{{ route('addProductCart', $product) }}"
+                                    href=""
                                     class="btn-fill fw-semibold"
                                     >Добавить в корзину</a
                                 >
@@ -285,7 +280,7 @@ export default {
     name: 'HomePage',
     data() {
         return {
-            comments: [],
+            
         };
     },
     props: ['changePage', 'server', 'user', 'PUBLIC'],
