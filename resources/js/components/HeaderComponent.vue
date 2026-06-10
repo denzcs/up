@@ -26,7 +26,7 @@
                                         d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
                                 </svg>
                             </span>
-                            <span class="drop-username fw-semibold">{{ this.user.fullname }}</span>
+                            <span class="drop-username fw-semibold">{{ this.user.name }}</span>
                             <span class="droparrow">▼</span>
                         </div>
                         <div class="dropdown-usermenu d-flex flex-column justify-content-around">
@@ -58,7 +58,7 @@
                         <div class="container">
                             <div class="row d-flex justify-content-between">
                                 <div class="col-12">
-                                    <AuthComponent v-if="regAuth == 'AuthComponent'" :server="server" :successUser="successUser" :getUser="getUser"/>
+                                    <AuthComponent v-if="regAuth == 'AuthComponent'" :server="server" :successUser="successUser"/>
                                     <RegisterComponent v-if="regAuth == 'RegisterComponent'" :server="server" :successUser="successUser" getUser="getUser"/>
                                 </div>
                             </div>

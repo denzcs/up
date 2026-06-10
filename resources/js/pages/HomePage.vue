@@ -1,8 +1,4 @@
 <template>
-    <section class="text-center">
-        <h1 class="fw-bold fs-1">Челябинский цветочный магазин</h1>
-        <h2 class="fw-bold fs-1">"Мир цветов"</h2>
-    </section>
     <div class="mainContent">
         <div class="container">
             <div class="row mb-5">

@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $user = new User();
-        $user->fullname = $request->fullname;
+        $user->name = $request->name;
         $user->password = $request->password;
         $user->email = $request->email;
         $user->save();
@@ -21,7 +21,7 @@ class AuthController extends Controller
     }
     public function login(AuthUserRequest $request)
     {
-        $user = User::where('username', $request->username)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             return response()->json(['token' => $user->createToken('api')->plainTextToken]);
