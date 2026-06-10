@@ -16,13 +16,13 @@
         :server="server"
         :user="user"
     />
-    <!-- <AdminPage
+    <AdminPage
         v-if="page == 'AdminPage'"
         :server="server"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
     />
-    <CategoriePage
+    <!-- <CategoriePage
         v-if="page == 'CategoriePage'"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
@@ -49,6 +49,7 @@
 <script>
 import FooterComponent from './components/FooterComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
+import AdminPage from './pages/AdminPage.vue';
 import HomePage from './pages/HomePage.vue';
 
 
@@ -128,6 +129,7 @@ export default {
         HeaderComponent,
         HomePage,
         FooterComponent,
+        AdminPage,
     },
     mounted() {
         if (localStorage.getItem('token')) {
