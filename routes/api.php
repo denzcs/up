@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post("/favorite/{id}", [FavoriteController::class, "create"]);
     Route::get("/favoriteDelete/{id}", [FavoriteController::class, "destroy"]);
     Route::get("/favoritesUser", [FavoriteController::class, "show"]);
+    Route::post("/category", [CategoryController::class, "store"]);
     Route::post('/UserStep/{recipe_id}', [UserController::class, 'UserStep']);
     Route::get('/LoadStep/{recipe_id}', [UserController::class, 'LoadStep']);
 });

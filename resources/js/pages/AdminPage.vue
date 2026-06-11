@@ -4,10 +4,10 @@
             <div class="row mb-5">
                 <div class="col-12 d-flex flex-column">
                     <h1 class="fw-bold text-break">
-                        Управление заказами, товарами, категориями
+                        Управление рецептами и категориями
                     </h1>
                     <span class="fs-5"
-                        >Добавляйте, удаляйте и редактируйте товары, заказы,
+                        >Добавляйте, удаляйте и редактируйте рецептами и
                         категории</span
                     >
                 </div>
@@ -16,11 +16,8 @@
                 <div class="col-12">
                     <div class="colform mb-5">
                         <h2 class="fw-bold">
-                            
-                                isset($product)
-                                    ? 'Изменить товар'
-                                    : 'Добавить товар'
-                            
+                            isset($product) ? 'Изменить товар' : 'Добавить
+                            товар'
                         </h2>
                         <form
                             action=""
@@ -46,7 +43,7 @@
                                         />
                                         @error('name')
                                         <div class="alert alert-danger">
-                                            $message 
+                                            $message
                                         </div>
                                         @enderror
                                     </div>
@@ -61,9 +58,7 @@
                                         >
                                             @isset($categories)
                                             @foreach($categories as $categorie)
-                                            <option
-                                                value=""
-                                            >
+                                            <option value="">
                                                 $categorie -> category
                                             </option>
                                             @endforeach @endisset
@@ -83,7 +78,7 @@
                                         />
                                         @error('price')
                                         <div class="alert alert-danger">
-                                             $message 
+                                            $message
                                         </div>
                                         @enderror
                                     </div>
@@ -117,7 +112,7 @@
                                             />
                                             @error('file')
                                             <div class="alert alert-danger">
-                                                 $message 
+                                                $message
                                             </div>
                                             @enderror
                                         </div>
@@ -136,36 +131,52 @@
                 <div class="col-12">
                     <div class="colform mb-5">
                         <h2 class="fw-bold">Добавить Категорию</h2>
-                        <form
-                            action="{{ route('createCategorie') }}"
-                            method="post"
-                        >
-                            @csrf
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-12 col-lg-6 mb-3">
-                                        <label
-                                            for="createCategory"
-                                            class="fw-semibold"
-                                            >Категория*</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="createCategory"
-                                            name="name"
-                                            style="width: 70%"
-                                        />
-                                    </div>
-                                    <div class="col-12">
-                                        <input
-                                            type="submit"
-                                            class="btn-fill fw-semibold"
-                                        />
-                                    </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label
+                                        for="createCategory"
+                                        class="fw-semibold"
+                                        >Категория*</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="createCategory"
+                                        name="name"
+                                        v-model="categoryName"
+                                        style="width: 70%"
+                                    />
+                                    <p class="red" v-if="errors.name">
+                                        {{ errors.name.join('. ') }}
+                                    </p>
+                                    <label
+                                        for="categoryDescription"
+                                        class="fw-semibold"
+                                        >Описание*</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="categoryDescription"
+                                        name="categoryDescription"
+                                        v-model="categoryDescription"
+                                        style="width: 70%"
+                                    />
+                                    <p class="red" v-if="errors.description">
+                                        {{ errors.description.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <button
+                                        @click="newCategory()"
+                                        class="btn-fill fw-semibold"
+                                    >
+                                        Отправить
+                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
@@ -189,14 +200,13 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    
                                                     <form
                                                         action=""
                                                         method="post"
                                                     >
                                                         @csrf
                                                         <th scope="row">
-                                                            $categorie->id 
+                                                            $categorie->id
                                                         </th>
                                                         <td>
                                                             <input
@@ -208,13 +218,12 @@
                                                                 "
                                                                 value=""
                                                             />
-                                                            
+
                                                             <div
                                                                 class="alert alert-danger"
                                                             >
-                                                                 $message 
+                                                                $message
                                                             </div>
-                                                            
                                                         </td>
                                                         <td>
                                                             <button
@@ -306,7 +315,7 @@
                                                 ($products as $product)
                                                 <tr>
                                                     <th scope="row">
-                                                        $product -> id 
+                                                        $product -> id
                                                     </th>
                                                     <td>
                                                         <img
@@ -320,14 +329,10 @@
                                                     </td>
                                                     <td>$product->name</td>
                                                     <td>
-                                                        
                                                         $categorie->category
-                                                        
                                                     </td>
                                                     <td>$product->price</td>
-                                                    <td>
-                                                        $product->quantity
-                                                    </td>
+                                                    <td>$product->quantity</td>
                                                     <td>
                                                         <div
                                                             class="d-flex align-items-center"
@@ -453,12 +458,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
-                                                <form
-                                                    action=""
-                                                    method="post"
-                                                >
-                                                    
+                                                <form action="" method="post">
                                                     <tr>
                                                         <th scope="row">
                                                             $order->id
@@ -466,18 +466,10 @@
                                                         <td>
                                                             $order->created_at
                                                         </td>
-                                                        <td>
-                                                            $order->name
-                                                        </td>
-                                                        <td>
-                                                            $order->address
-                                                        </td>
-                                                        <td>
-                                                            $order->phone
-                                                        </td>
-                                                        <td>
-                                                            $order->when 
-                                                        </td>
+                                                        <td>$order->name</td>
+                                                        <td>$order->address</td>
+                                                        <td>$order->phone</td>
+                                                        <td>$order->when</td>
                                                         <td>
                                                             $order->quantity
                                                         </td>
@@ -587,14 +579,10 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td>$order->payment</td>
                                                         <td>
-                                                            $order->payment
-                                                        </td>
-                                                        <td>
-                                                            
-                                                             $order->declinedTed 
+                                                            $order->declinedTed
 
-                                                            
                                                             <div class="d-flex">
                                                                 <input
                                                                     type="text"
@@ -622,11 +610,9 @@
                                                             >
                                                                 $message
                                                             </div>
-                                                            
                                                         </td>
                                                     </tr>
                                                 </form>
-                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -645,12 +631,28 @@ export default {
     props: ['server', 'changePage', 'PUBLIC'],
     data() {
         return {
-
+            categoryName: null,
+            categoryDescription: null,
+            errors: {},
         };
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
+        newCategory() {
+            let formdata = new FormData();
+            if (this.categoryName) formdata.append('name', this.categoryName);
+            if (this.categoryDescription)
+                formdata.append('description', this.categoryDescription);
+            this.server('category', 'POST', formdata).then((result) => {
+                if (result) {
+                    this.categoryName = null;
+                    this.categoryDescription = null;
+                }
+                if (result.errors) {
+                    this.errors = result.errors;
+                }
+            });
+        },
     },
 };
 </script>

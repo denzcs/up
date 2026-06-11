@@ -1,4 +1,8 @@
 <template>
+    <section class="text-center">
+        <h1 class="fw-bold fs-1">Сборник рецептов</h1>
+        <h2 class="fw-bold fs-1">"RecipeLib"</h2>
+    </section>
     <div class="mainContent">
         <div class="container">
             <div class="row mb-5">

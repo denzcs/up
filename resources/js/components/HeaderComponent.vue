@@ -3,14 +3,7 @@
         <div class="container header">
             <div class="row d-flex justify-content-lg-between justify-content-center">
                 <div class="col-lg-3 col-12 mb-lg-0 mb-3 text-center text-lg-start">
-                    <img
-                        @click="changePage('HomePage')"
-                        width="125"
-                        height="37"
-                        src="https://www.siluet-classic.ru/bitrix/images/log22o.png"
-                        alt=""
-                        style="cursor: pointer;"
-                    />
+                    <a href="" @click.prevent="changePage('HomePage')" class="fs-1 text-decoration-none" style="color: #67B7DF;">RecipeLib</a>
                 </div>
                 
                 <div class="col-lg-3 col-12 d-flex justify-content-center justify-content-lg-end align-items-center">
