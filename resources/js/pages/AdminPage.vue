@@ -194,86 +194,94 @@
                                                         Категория
                                                     </th>
                                                     <th scope="col">
+                                                        Описание
+                                                    </th>
+                                                    <th scope="col">
                                                         Действие
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <form
-                                                        action=""
-                                                        method="post"
-                                                    >
-                                                        @csrf
-                                                        <th scope="row">
-                                                            $categorie->id
-                                                        </th>
-                                                        <td>
-                                                            <input
-                                                                type="text"
-                                                                class="form-control"
-                                                                name="name"
-                                                                style="
-                                                                    width: 40%;
-                                                                "
-                                                                value=""
-                                                            />
+                                                <tr
+                                                    v-for="category in categories"
+                                                >
+                                                    <th scope="row">
+                                                        {{ category.id }}
+                                                    </th>
+                                                    <td>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            name="categoryNameUpdate"
+                                                            style="width: 40%"
+                                                            :value="category.name"
+                                                        />
+                                                        <p class="red" v-if="errors.name">
+                                                            {{ errors.description.join('. ') }}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            name="categorydescriptionUpdate"
+                                                            style="width: 40%"
+                                                            :value="category.description"
+                                                        />
 
-                                                            <div
-                                                                class="alert alert-danger"
+                                                        <div
+                                                            class="alert alert-danger"
+                                                        >
+                                                            $message
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            type="submit"
+                                                            class="btn-fill fw-semibold"
+                                                            style="height: 40px"
+                                                            @click="categoryUpdate(category.id)"
+                                                        >
+                                                            Обновить данные
+                                                        </button>
+                                                        <a
+                                                            href=""
+                                                            class="text-reset"
+                                                            ><svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="2"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
                                                             >
-                                                                $message
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <button
-                                                                type="submit"
-                                                                class="btn-fill fw-semibold"
-                                                                style="
-                                                                    height: 40px;
-                                                                "
-                                                            >
-                                                                Обновить данные
-                                                            </button>
-                                                            <a
-                                                                href="{{ route('categoryDelete', $categorie) }}"
-                                                                class="text-reset"
-                                                                ><svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    width="24"
-                                                                    height="24"
-                                                                    viewBox="0 0 24 24"
+                                                                <path
+                                                                    stroke="none"
+                                                                    d="M0 0h24v24H0z"
                                                                     fill="none"
-                                                                    stroke="currentColor"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
-                                                                >
-                                                                    <path
-                                                                        stroke="none"
-                                                                        d="M0 0h24v24H0z"
-                                                                        fill="none"
-                                                                    />
-                                                                    <path
-                                                                        d="M4 7l16 0"
-                                                                    />
-                                                                    <path
-                                                                        d="M10 11l0 6"
-                                                                    />
-                                                                    <path
-                                                                        d="M14 11l0 6"
-                                                                    />
-                                                                    <path
-                                                                        d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                                                                    />
-                                                                    <path
-                                                                        d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                                                                    />
-                                                                </svg>
-                                                            </a>
-                                                        </td>
-                                                    </form>
+                                                                />
+                                                                <path
+                                                                    d="M4 7l16 0"
+                                                                />
+                                                                <path
+                                                                    d="M10 11l0 6"
+                                                                />
+                                                                <path
+                                                                    d="M14 11l0 6"
+                                                                />
+                                                                <path
+                                                                    d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                                                />
+                                                                <path
+                                                                    d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                                                />
+                                                            </svg>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -634,10 +642,18 @@ export default {
             categoryName: null,
             categoryDescription: null,
             errors: {},
+            categories: [],
         };
     },
-    mounted() {},
+    mounted() {
+        this.getCategories();
+    },
     methods: {
+        getCategories(){
+            this.server('category').then((result)=>{
+                this.categories = result;
+            })
+        },
         newCategory() {
             let formdata = new FormData();
             if (this.categoryName) formdata.append('name', this.categoryName);
