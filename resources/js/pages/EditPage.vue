@@ -3,7 +3,12 @@
         <div class="container">
             <div class="row mb-5">
                 <div class="col-2 d-flex flex-column">
-                    <button class="btn btn-fill" @click="changePage('AdminPage')">Назад</button>
+                    <button
+                        class="btn btn-fill"
+                        @click="changePage('AdminPage')"
+                    >
+                        Назад
+                    </button>
                 </div>
                 <div class="col-12 d-flex flex-column">
                     <h1 class="fw-bold text-break">Редактирование рецепта</h1>
@@ -139,6 +144,166 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="colform mb-5">
+                        <h2 class="fw-bold">Добавить ингредиенты</h2>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="ingredient" class="fw-semibold"
+                                        >Выберите ингредиент*</label
+                                    >
+                                    <select
+                                        v-model="ingredient"
+                                        id="ingredient"
+                                    >
+                                        <option
+                                            v-for="ingredient in ingredients"
+                                            type="radio"
+                                            :value="ingredient.id"
+                                        >
+                                            {{ ingredient.name }} ({{
+                                                ingredient.unit
+                                            }})
+                                        </option>
+                                    </select>
+                                    <p class="red" v-if="errors.ingredient">
+                                        {{ errors.ingredient.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <input
+                                        type="text"
+                                        v-model="quantity"
+                                        placeholder="Количество"
+                                        class="form-control"
+                                        style="width: 40%"
+                                    />
+                                    <p class="red" v-if="errors.quantity">
+                                        {{ errors.quantity.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <button
+                                        @click="recipeIngredient"
+                                        class="btn-fill fw-semibold"
+                                    >
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="colform mb-5">
+                        <div class="title" id="allOrders">
+                            <h2 class="fw-bold">Все Ингредиенты</h2>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">
+                                                        Название
+                                                    </th>
+                                                    <th scope="col">
+                                                        Количество
+                                                    </th>
+                                                    <th scope="col">
+                                                        Действие
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="ingredient in recipe_ingredients"
+                                                >
+                                                    <th scope="row">
+                                                        {{
+                                                            ingredient
+                                                                .ingredient.id
+                                                        }}
+                                                    </th>
+                                                    <td>
+                                                        {{
+                                                            ingredient
+                                                                .ingredient.name
+                                                        }}
+                                                    </td>
+                                                    <td>
+                                                        {{
+                                                            ingredient.quantity +
+                                                            ' (' +
+                                                            ingredient
+                                                                .ingredient
+                                                                .unit +
+                                                            ')'
+                                                        }}
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="d-flex align-items-center"
+                                                        >
+                                                            <a
+                                                                href=""
+                                                                @click.prevent="
+                                                                    deleteIngredientsRecipe(
+                                                                        ingredient.id,
+                                                                    )
+                                                                "
+                                                                class="text-reset"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    stroke-width="2"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+                                                                >
+                                                                    <path
+                                                                        stroke="none"
+                                                                        d="M0 0h24v24H0z"
+                                                                        fill="none"
+                                                                    />
+                                                                    <path
+                                                                        d="M4 7l16 0"
+                                                                    />
+                                                                    <path
+                                                                        d="M10 11l0 6"
+                                                                    />
+                                                                    <path
+                                                                        d="M14 11l0 6"
+                                                                    />
+                                                                    <path
+                                                                        d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                                                    />
+                                                                    <path
+                                                                        d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                                                    />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -149,16 +314,13 @@ export default {
     props: ['server', 'changePage', 'PUBLIC', 'pageId'],
     data() {
         return {
-            categoryName: null,
-            categoryDescription: null,
             recipe: { category: {} },
             difficulty: null,
             selectedCategory: null,
-            difficulty: null,
+            quantity: null,
             photo: null,
-            ingredientName: null,
-            ingredientUnit: null,
-            ingredientUpdateId: null,
+            recipe_ingredients: [],
+            ingredient: null,
             errors: {},
             categories: [],
             ingredients: [],
@@ -168,21 +330,62 @@ export default {
         this.getRecipe(this.pageId);
         this.getIngredients();
         this.getCategories();
+        this.getIngredientsRecipe();
     },
     methods: {
+        recipeIngredient() {
+            let formdata = new FormData();
+            formdata.append('recipe', this.pageId);
+            if (this.quantity) formdata.append('quantity', this.quantity);
+            if (this.ingredient) formdata.append('ingredient', this.ingredient);
+            this.server('recipeIngredient', 'POST', formdata)
+                .then((result) => {
+                    if (result.errors) {
+                        this.errors = result.errors;
+                        console.log(result.errors);
+                    }
+                    if (result.message == 'ok') {
+                        console.log(result);
+                        this.getIngredientsRecipe();
+                    }
+                })
+                .catch((error) => console.log('error', error));
+        },
+        getIngredientsRecipe() {
+            this.server('recipeIngredient/' + this.pageId)
+                .then((result) => {
+                    this.recipe_ingredients = result;
+                    console.log(result);
+                })
+                .catch((error) => console.log('error', error));
+        },
+        deleteIngredientsRecipe(ingredient) {
+            this.server('recipeIngredient/' + ingredient, 'DELETE').then(
+                (result) => {
+                    if (result) {
+                        this.getIngredientsRecipe();
+                    }
+                },
+            );
+        },
         updateRecipe(recipe) {
             let formdata = new FormData();
             if (this.recipe.title) formdata.append('title', this.recipe.title);
-            if (this.selectedCategory) formdata.append('category', this.selectedCategory);
+            if (this.selectedCategory)
+                formdata.append('category', this.selectedCategory);
             if (this.recipe.recipe_description)
-                formdata.append('recipe_description', this.recipe.recipe_description);
-            if (this.recipe.cook_time) formdata.append('cook_time', this.recipe.cook_time);
+                formdata.append(
+                    'recipe_description',
+                    this.recipe.recipe_description,
+                );
+            if (this.recipe.cook_time)
+                formdata.append('cook_time', this.recipe.cook_time);
             if (this.difficulty) formdata.append('difficulty', this.difficulty);
             let photo = document.querySelector('#formFile');
             if (photo.files[0]) {
                 formdata.append('photo', photo.files[0]);
             }
-            this.server('recipe/'+recipe, 'POST', formdata)
+            this.server('recipe/' + recipe, 'POST', formdata)
                 .then((result) => {
                     if (result.errors) {
                         this.errors = result.errors;
@@ -202,13 +405,6 @@ export default {
                 console.log(this.recipe);
             });
         },
-        // deleteRecipe(recipe) {
-        //     this.server('recipe/' + recipe, 'DELETE').then((result) => {
-        //         if (result) {
-        //             this.getRecipes();
-        //         }
-        //     });
-        // },
         getCategories() {
             this.server('category').then((result) => {
                 this.categories = result;
@@ -217,13 +413,6 @@ export default {
         getIngredients() {
             this.server('ingredient').then((result) => {
                 this.ingredients = result;
-            });
-        },
-        deleteIngredient(ingredient) {
-            this.server('ingredient/' + ingredient, 'DELETE').then((result) => {
-                if (result) {
-                    this.getIngredients();
-                }
             });
         },
     },

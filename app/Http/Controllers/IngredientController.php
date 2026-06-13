@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use App\Models\RecipeIngredient;
+use App\Models\Recipe;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use App\Http\Requests\RecipeIngredientRequest;
 
 class IngredientController extends Controller
 {
@@ -15,7 +18,10 @@ class IngredientController extends Controller
     {
         return response()->json(Ingredient::all());
     }
-
+    public function indexRecipeIngredient(Recipe $recipe)
+    {
+        return response()->json(RecipeIngredient::where('recipe_id', $recipe->id)->with('ingredient')->get());
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -33,6 +39,15 @@ class IngredientController extends Controller
             'name' => $request->ingredient_name,
             'unit' => $request->unit,
         ]));
+    }
+    public function storeRecipeIngredient(RecipeIngredientRequest $request)
+    {
+        $ingredient = new RecipeIngredient();
+        $ingredient->recipe_id = $request->recipe;
+        $ingredient->ingredient_id = $request->ingredient;
+        $ingredient->quantity = $request->quantity;
+        $ingredient->save(); 
+        return response()->json(['message' => 'ok']);
     }
 
     /**
@@ -68,5 +83,9 @@ class IngredientController extends Controller
     public function destroy(Ingredient $ingredient)
     {
         return response()->json($ingredient->delete());
+    }
+    public function destroyRecipeIngredient(recipeIngredient $recipeIngredient)
+    {
+        return response()->json($recipeIngredient->delete());
     }
 }

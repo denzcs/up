@@ -25,6 +25,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete("/ingredient/{ingredient}", [IngredientController::class, "destroy"]);
     Route::get("/ingredient/{ingredient}", [IngredientController::class, "show"]);
     Route::post("/ingredient/{ingredient}", [IngredientController::class, "update"]);
+    Route::post("/recipeIngredient", [IngredientController::class, "storeRecipeIngredient"]);
+    Route::get("/recipeIngredient/{recipe}", [IngredientController::class, "indexRecipeIngredient"]);
+    Route::delete("/recipeIngredient/{recipeIngredient}", [IngredientController::class, "destroyRecipeIngredient"]);
     Route::delete("/category/{category}", [CategoryController::class, "destroy"]);
     Route::post('/UserStep/{recipe_id}', [UserController::class, 'UserStep']);
     Route::get('/LoadStep/{recipe_id}', [UserController::class, 'LoadStep']);
