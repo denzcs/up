@@ -2,6 +2,9 @@
     <div class="main-content">
         <div class="container">
             <div class="row mb-5">
+                <div class="col-2 d-flex flex-column">
+                    <button class="btn btn-fill" @click="changePage('AdminPage')">Назад</button>
+                </div>
                 <div class="col-12 d-flex flex-column">
                     <h1 class="fw-bold text-break">Редактирование рецепта</h1>
                     <span class="fs-5"

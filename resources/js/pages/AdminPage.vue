@@ -348,7 +348,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="colform mb-5">
+                    <div class="colform mb-5" id="recipes">
                         <h2 class="fw-bold">Все рецепты</h2>
                         <div class="container">
                             <div class="row">

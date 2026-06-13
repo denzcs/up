@@ -7,6 +7,7 @@
         :changePage="changePage"
         :PUBLIC="PUBLIC"
         :user="user"
+        :class="{'mb-3': page!='HomePage'}"
     />
     <!-- <NavBarComponent /> -->
     <HomePage
