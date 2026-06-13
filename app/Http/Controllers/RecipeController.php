@@ -48,7 +48,8 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        $recipe = Recipe::where('id',$recipe->id)->with(['category','steps'])->first();
+        return response()->json($recipe);
     }
 
     /**
@@ -64,7 +65,17 @@ class RecipeController extends Controller
      */
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        //
+        $recipe->title = $request->title;
+        $recipe->category_id = $request->category;
+        $recipe->recipe_description = $request->recipe_description;
+        $recipe->cook_time = $request->cook_time;
+        $recipe->difficulty = $request->difficulty;
+        if ($request->photo) {
+            $photo = Storage::disk("public")->putFile('/images', $request->photo);
+            $recipe->photo = $photo;
+        }
+        $recipe->save(); 
+        return response()->json(['message' => 'ok', $recipe]);
     }
 
     /**

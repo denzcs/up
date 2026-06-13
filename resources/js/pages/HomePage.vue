@@ -283,7 +283,7 @@ export default {
             
         };
     },
-    props: ['changePage', 'server', 'user', 'PUBLIC'],
+    props: ['changePage', 'server', 'user', 'PUBLIC', 'getCategories', 'categories'],
     components: {},
     mounted() {},
     methods: {

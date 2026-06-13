@@ -10,10 +10,10 @@ class UpdateRecipeRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    // public function authorize(): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,7 +23,12 @@ class UpdateRecipeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "title"=>"required|min:3",
+            "category"=>"required",
+            "recipe_description"=>"required|min:3",
+            "cook_time"=>"required",
+            "difficulty"=>"required",
+            "photo",
         ];
     }
 }

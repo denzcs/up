@@ -40,7 +40,7 @@ class IngredientController extends Controller
      */
     public function show(Ingredient $ingredient)
     {
-        //
+        return response()->json($ingredient);
     }
 
     /**
@@ -56,7 +56,10 @@ class IngredientController extends Controller
      */
     public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
     {
-        //
+        $ingredient->name=$request->ingredient_name;
+        $ingredient->unit=$request->unit;
+        $ingredient->save();
+        return response()->json($ingredient);
     }
 
     /**

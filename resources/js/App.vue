@@ -15,12 +15,22 @@
         :PUBLIC="PUBLIC"
         :server="server"
         :user="user"
+        :getCategories="getCategories"
     />
     <AdminPage
         v-if="page == 'AdminPage'"
         :server="server"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
+        :getCategories="getCategories"
+    />
+    <EditPage
+        v-if="page == 'EditPage'"
+        :server="server"
+        :changePage="changePage"
+        :PUBLIC="PUBLIC"
+        :getCategories="getCategories"
+        :pageId="pageId"
     />
     <!-- <CategoriePage
         v-if="page == 'CategoriePage'"
@@ -50,6 +60,7 @@
 import FooterComponent from './components/FooterComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import AdminPage from './pages/AdminPage.vue';
+import EditPage from './pages/EditPage.vue';
 import HomePage from './pages/HomePage.vue';
 
 
@@ -93,6 +104,11 @@ export default {
             this.user = {};
             this.isUser = false;
         },
+        getCategories() {
+            this.server('category').then((result) => {
+                this.categories = result;
+            });
+        },
         async server(route, method = 'GET', FormData = null) {
             let myHeaders = new Headers();
             myHeaders.append('Accept', 'application/json');
@@ -130,6 +146,7 @@ export default {
         HomePage,
         FooterComponent,
         AdminPage,
+        EditPage,
     },
     mounted() {
         if (localStorage.getItem('token')) {

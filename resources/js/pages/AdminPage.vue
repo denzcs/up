@@ -191,7 +191,7 @@
                 </div>
                 <div class="col-12" id="indredientCreateForm">
                     <div class="colform mb-5">
-                        <h2 class="fw-bold">Добавить ингредиент</h2>
+                        <h2 class="fw-bold">{{this.ingredientUpdateId?'Изменить':'Добавить'}} ингредиент</h2>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 col-lg-6 mb-3">
@@ -231,7 +231,7 @@
                                 </div>
                                 <div class="col-12">
                                     <button
-                                        @click="newIngredient()"
+                                        @click="this.ingredientUpdateId?updateIngredient(this.ingredientUpdateId):newIngredient()"
                                         class="btn-fill fw-semibold"
                                     >
                                         Отправить
@@ -425,6 +425,7 @@
                                                         >
                                                             <a
                                                                 href=""
+                                                                @click.prevent="changePage('EditPage', recipe.id)"
                                                                 style="
                                                                     margin-right: 5px;
                                                                 "
@@ -555,6 +556,7 @@
                                                         >
                                                             <a
                                                                 href="#categoryCreateForm"
+                                                                @click="updateIngredientForm(ingredient.id)"
                                                                 style="
                                                                     margin-right: 5px;
                                                                 "
@@ -662,10 +664,11 @@ export default {
             recipeCategory: null,
             ingredientName: null,
             ingredientUnit: null,
+            ingredientUpdateId: null,
             errors: {},
-            categories: [],
             recipes: [],
             ingredients: [],
+            categories: [],
         };
     },
     mounted() {
@@ -757,6 +760,37 @@ export default {
                     console.log(result);
                     this.ingredientName = null;
                     this.ingredientUnit = null;
+                    this.getIngredients();
+                }
+                if (result.errors) {
+                    this.errors = result.errors;
+                }
+            });
+        },
+        updateIngredient(ingredient) {
+            let formdata = new FormData();
+            if (this.ingredientName)
+                formdata.append('ingredient_name', this.ingredientName);
+            if (this.ingredientUnit)
+                formdata.append('unit', this.ingredientUnit);
+            this.server('ingredient/'+ingredient, 'POST', formdata).then((result) => {
+                if (result) {
+                    this.ingredientName = null;
+                    this.ingredientUnit = null;
+                    this.getIngredients();
+                }
+                if (result.errors) {
+                    this.errors = result.errors;
+                }
+            });
+        },
+        updateIngredientForm(ingredient) {
+            this.server('ingredient/'+ingredient).then((result) => {
+                if (result) {
+                    console.log(result);
+                    this.ingredientUpdateId = result.id;
+                    this.ingredientName = result.name;
+                    this.ingredientUnit = result.unit;
                     this.getIngredients();
                 }
                 if (result.errors) {

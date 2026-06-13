@@ -20,16 +20,20 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post("/ingredient", [IngredientController::class, "store"]);
     Route::post("/category", [CategoryController::class, "store"]);
     Route::post("/recipe", [RecipeController::class, "store"]);
+    Route::post("/recipe/{recipe}", [RecipeController::class, "update"]);
     Route::delete("/recipe/{recipe}", [RecipeController::class, "destroy"]);
-    Route::delete("/ingredient/{ingredient}", [ingredientController::class, "destroy"]);
+    Route::delete("/ingredient/{ingredient}", [IngredientController::class, "destroy"]);
+    Route::get("/ingredient/{ingredient}", [IngredientController::class, "show"]);
+    Route::post("/ingredient/{ingredient}", [IngredientController::class, "update"]);
     Route::delete("/category/{category}", [CategoryController::class, "destroy"]);
     Route::post('/UserStep/{recipe_id}', [UserController::class, 'UserStep']);
     Route::get('/LoadStep/{recipe_id}', [UserController::class, 'LoadStep']);
 });
 Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
-Route::post("/recipesHome", [RecipeController::class, "recipesHome"]);
 Route::get("/recipe", [RecipeController::class, "index"]);
+Route::get("/recipe/{recipe}", [RecipeController::class, "show"]);
+
 Route::get("/category", [CategoryController::class, "index"]);
 Route::get("/ingredient", [IngredientController::class, "index"]);
 // Route::get("/category/{category}", [CategoryController::class, "show"]);
