@@ -15,120 +15,130 @@
             <div class="row">
                 <div class="col-12">
                     <div class="colform mb-5">
-                        <h2 class="fw-bold">
-                            isset($product) ? 'Изменить товар' : 'Добавить
-                            товар'
-                        </h2>
-                        <form
-                            action=""
-                            method="post"
-                            enctype="multipart/form-data"
-                        >
-                            @csrf
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-12 col-lg-6 mb-3">
+                        <h2 class="fw-bold">Добавить рецепт</h2>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="productname" class="fw-semibold"
+                                        >Название*</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="name"
+                                        id="productname"
+                                        style="width: 70%"
+                                        v-model="recipeName"
+                                        value=""
+                                    />
+                                    <p class="red" v-if="errors.title">
+                                        {{ errors.title.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="category">Категория *</label>
+                                    <select v-model="category">
+                                        <option
+                                            v-for="category in categories"
+                                            type="radio"
+                                            :value="category.id"
+                                        >
+                                            {{ category.name }}
+                                        </option>
+                                    </select>
+                                    <p class="red" v-if="errors.category">
+                                        {{ errors.category.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="price" class="fw-semibold"
+                                        >Описание рецепта</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="price"
+                                        name="price"
+                                        style="width: 70%"
+                                        value=""
+                                        v-model="recipeDescription"
+                                    />
+                                    <p
+                                        class="red"
+                                        v-if="errors.recipeDescription"
+                                    >
+                                        {{
+                                            errors.recipeDescription.join('. ')
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="quantity" class="fw-semibold"
+                                        >Время готовки (в минутах)</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="quantity"
+                                        name="quantity"
+                                        style="width: 40%"
+                                        v-model="cooktime"
+                                    />
+                                    <p class="red" v-if="errors.cooktime">
+                                        {{ errors.cooktime.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="diff" class="fw-semibold"
+                                        >Выберите сложность</label
+                                    >
+                                    <select v-model="difficulty">
+                                        <option value="Легко" type="radio">
+                                            Легко
+                                        </option>
+                                        <option value="Средне" type="radio">
+                                            Средне
+                                        </option>
+                                        <option value="Сложно" type="radio">
+                                            Сложно
+                                        </option>
+                                    </select>
+                                    <p class="red" v-if="errors.difficulty">
+                                        {{ errors.difficulty.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <div class="mb-3">
                                         <label
-                                            for="productname"
-                                            class="fw-semibold"
-                                            >Название*</label
+                                            for="formFile"
+                                            class="form-label fw-semibold"
+                                            >Изображение рецепта</label
                                         >
                                         <input
-                                            type="text"
                                             class="form-control"
-                                            name="name"
-                                            id="productname"
-                                            style="width: 70%"
-                                            value="{{isset($product)?$product->name:''}}"
+                                            type="file"
+                                            id="formFile"
+                                            name="file"
                                         />
-                                        @error('name')
-                                        <div class="alert alert-danger">
-                                            $message
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 col-lg-6 mb-3">
-                                        <label for="category"
-                                            >Категория *</label
-                                        >
-                                        <select
-                                            name="category"
-                                            class="form-select"
-                                            style="width: 70%"
-                                        >
-                                            @isset($categories)
-                                            @foreach($categories as $categorie)
-                                            <option value="">
-                                                $categorie -> category
-                                            </option>
-                                            @endforeach @endisset
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-lg-6 mb-3">
-                                        <label for="price" class="fw-semibold"
-                                            >Цена</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="price"
-                                            name="price"
-                                            style="width: 70%"
-                                            value=""
-                                        />
-                                        @error('price')
-                                        <div class="alert alert-danger">
-                                            $message
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 col-lg-6 mb-3">
-                                        <label
-                                            for="quantity"
-                                            class="fw-semibold"
-                                            >наличие</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="quantity"
-                                            name="quantity"
-                                            style="width: 20%"
-                                            value=""
-                                        />
-                                    </div>
-                                    <div class="col-12 col-lg-6 mb-3">
-                                        <div class="mb-3">
-                                            <label
-                                                for="formFile"
-                                                class="form-label fw-semibold"
-                                                >Изображение товара</label
-                                            >
-                                            <input
-                                                class="form-control"
-                                                type="file"
-                                                id="formFile"
-                                                name="file"
-                                            />
-                                            @error('file')
-                                            <div class="alert alert-danger">
-                                                $message
-                                            </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <input
-                                            type="submit"
-                                            class="btn-fill fw-semibold"
-                                        />
+                                        <p class="red" v-if="errors.photo">
+                                            {{ errors.photo.join('. ') }}
+                                        </p>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <button
+                                        @click="newRecipe()"
+                                        class="btn-fill fw-semibold"
+                                    >
+                                        Отправить
+                                    </button>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12" id="categoryCreateForm">
                     <div class="colform mb-5">
                         <h2 class="fw-bold">Добавить Категорию</h2>
                         <div class="container">
@@ -179,6 +189,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12" id="indredientCreateForm">
+                    <div class="colform mb-5">
+                        <h2 class="fw-bold">Добавить ингредиент</h2>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label
+                                        for="ingredientName"
+                                        class="fw-semibold"
+                                        >название ингредиента*</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ingredientName"
+                                        name="name"
+                                        v-model="ingredientName"
+                                        style="width: 70%"
+                                    />
+                                    <p class="red" v-if="errors.name">
+                                        {{ errors.name.join('. ') }}
+                                    </p>
+                                    <label
+                                        for="ingredientUnit"
+                                        class="fw-semibold"
+                                        >Единица измерения категории*</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ingredientUnit"
+                                        name="ingredientUnit"
+                                        v-model="ingredientUnit"
+                                        placeholder="гр."
+                                        style="width: 70%"
+                                    />
+                                    <p class="red" v-if="errors.description">
+                                        {{ errors.description.join('. ') }}
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <button
+                                        @click="newIngredient()"
+                                        class="btn-fill fw-semibold"
+                                    >
+                                        Отправить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="colform mb-5">
                         <h2 class="fw-bold">Все категории</h2>
@@ -214,38 +276,32 @@
                                                             class="form-control"
                                                             name="categoryNameUpdate"
                                                             style="width: 40%"
-                                                            :value="category.name"
+                                                            :value="
+                                                                category.name
+                                                            "
+                                                            disabled
                                                         />
-                                                        <p class="red" v-if="errors.name">
-                                                            {{ errors.description.join('. ') }}
-                                                        </p>
                                                     </td>
                                                     <td>
                                                         <input
                                                             type="text"
                                                             class="form-control"
-                                                            name="categorydescriptionUpdate"
+                                                            name="categoryDescriptionUpdate"
                                                             style="width: 40%"
-                                                            :value="category.description"
+                                                            :value="
+                                                                category.description
+                                                            "
+                                                            disabled
                                                         />
-
-                                                        <div
-                                                            class="alert alert-danger"
-                                                        >
-                                                            $message
-                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <button
-                                                            type="submit"
-                                                            class="btn-fill fw-semibold"
-                                                            style="height: 40px"
-                                                            @click="categoryUpdate(category.id)"
-                                                        >
-                                                            Обновить данные
-                                                        </button>
                                                         <a
                                                             href=""
+                                                            @click.prevent="
+                                                                deleteCategory(
+                                                                    category.id,
+                                                                )
+                                                            "
                                                             class="text-reset"
                                                             ><svg
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +349,7 @@
                 </div>
                 <div class="col-12">
                     <div class="colform mb-5">
-                        <h2 class="fw-bold">Все товары</h2>
+                        <h2 class="fw-bold">Все рецепты</h2>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
@@ -303,31 +359,39 @@
                                                 <tr>
                                                     <th scope="col">Id</th>
                                                     <th scope="col">
-                                                        Фото товара
+                                                        Фото рецепта
                                                     </th>
                                                     <th scope="col">
-                                                        Название товара
+                                                        Название рецепта
                                                     </th>
                                                     <th scope="col">
                                                         Категория
                                                     </th>
-                                                    <th scope="col">Цена</th>
-                                                    <th scope="col">Наличие</th>
+                                                    <th scope="col">
+                                                        Описание
+                                                    </th>
+                                                    <th scope="col">
+                                                        Сложность
+                                                    </th>
+                                                    <th scope="col">
+                                                        Время готовки
+                                                    </th>
                                                     <th scope="col">
                                                         Действие
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @isset($products) @foreach
-                                                ($products as $product)
-                                                <tr>
+                                                <tr v-for="recipe in recipes">
                                                     <th scope="row">
-                                                        $product -> id
+                                                        {{ recipe.id }}
                                                     </th>
                                                     <td>
                                                         <img
-                                                            src=""
+                                                            :src="
+                                                                PUBLIC +
+                                                                recipe.photo
+                                                            "
                                                             alt=""
                                                             style="
                                                                 width: auto;
@@ -335,12 +399,26 @@
                                                             "
                                                         />
                                                     </td>
-                                                    <td>$product->name</td>
-                                                    <td>
-                                                        $categorie->category
+                                                    <td class="text-break">
+                                                        {{ recipe.title }}
                                                     </td>
-                                                    <td>$product->price</td>
-                                                    <td>$product->quantity</td>
+                                                    <td>
+                                                        {{
+                                                            recipe.category.name
+                                                        }}
+                                                    </td>
+                                                    <td class="text-break">
+                                                        {{
+                                                            recipe.recipe_description
+                                                        }}
+                                                    </td>
+                                                    <td>
+                                                        {{ recipe.difficulty }}
+                                                    </td>
+                                                    <td>
+                                                        {{ recipe.cook_time }}
+                                                        мин.
+                                                    </td>
                                                     <td>
                                                         <div
                                                             class="d-flex align-items-center"
@@ -381,6 +459,11 @@
                                                             </a>
                                                             <a
                                                                 href=""
+                                                                @click.prevent="
+                                                                    deleteRecipe(
+                                                                        recipe.id,
+                                                                    )
+                                                                "
                                                                 class="text-reset"
                                                             >
                                                                 <svg
@@ -420,7 +503,6 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @endforeach @endisset
                                             </tbody>
                                         </table>
                                     </div>
@@ -432,7 +514,7 @@
                 <div class="col-12">
                     <div class="colform mb-5">
                         <div class="title" id="allOrders">
-                            <h2 class="fw-bold">Все Заказы</h2>
+                            <h2 class="fw-bold">Все Ингредиенты</h2>
                         </div>
 
                         <div class="container">
@@ -444,183 +526,113 @@
                                                 <tr>
                                                     <th scope="col">Id</th>
                                                     <th scope="col">
-                                                        Дата создания
-                                                    </th>
-                                                    <th scope="col">Фио</th>
-                                                    <th scope="col">
-                                                        Адрес доставки
+                                                        Название
                                                     </th>
                                                     <th scope="col">
-                                                        Номер телефона
+                                                        Единица измерения
                                                     </th>
                                                     <th scope="col">
-                                                        Дата доставки
-                                                    </th>
-                                                    <th scope="col">колво</th>
-                                                    <th scope="col">Статус</th>
-                                                    <th scope="col">Оплата</th>
-                                                    <th scope="col">
-                                                        Сообщение для
-                                                        пользователя
+                                                        Действие
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <form action="" method="post">
-                                                    <tr>
-                                                        <th scope="row">
-                                                            $order->id
-                                                        </th>
-                                                        <td>
-                                                            $order->created_at
-                                                        </td>
-                                                        <td>$order->name</td>
-                                                        <td>$order->address</td>
-                                                        <td>$order->phone</td>
-                                                        <td>$order->when</td>
-                                                        <td>
-                                                            $order->quantity
-                                                        </td>
-                                                        <td>
-                                                            <div
-                                                                class="userbar"
-                                                            >
-                                                                <div
-                                                                    class="userbtn"
+                                                <tr
+                                                    v-for="ingredient in ingredients"
+                                                >
+                                                    <th scope="row">
+                                                        {{ ingredient.id }}
+                                                    </th>
+                                                    <td>
+                                                        {{ ingredient.name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ ingredient.unit }}
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            class="d-flex align-items-center"
+                                                        >
+                                                            <a
+                                                                href="#categoryCreateForm"
+                                                                style="
+                                                                    margin-right: 5px;
+                                                                "
+                                                                class="text-reset"
+                                                                ><svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    stroke-width="2"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
                                                                 >
-                                                                    <span
-                                                                        class="drop-username fw-semibold"
-                                                                    >
-                                                                        $order->status
-                                                                    </span>
-                                                                    <span
-                                                                        class="droparrow"
-                                                                        >▼</span
-                                                                    >
-                                                                </div>
-                                                                <div
-                                                                    class="dropdown-usermenu d-flex flex-column justify-content-around"
-                                                                    style="
-                                                                        width: 400px;
-                                                                    "
-                                                                >
-                                                                    <div
-                                                                        class="container"
-                                                                    >
-                                                                        <div
-                                                                            class="row"
-                                                                        >
-                                                                            <div
-                                                                                class="col-3"
-                                                                            >
-                                                                                <input
-                                                                                    type="submit"
-                                                                                    name="status"
-                                                                                    class="fs-7 fw-semibold text-reset dropdown-usermenu-item form-control text-center"
-                                                                                    style="
-                                                                                        height: 25px;
-                                                                                        font-size: 10px;
-                                                                                        transition: 0.5s;
-                                                                                        border: 2px
-                                                                                            solid
-                                                                                            #f1f5f9;
-                                                                                    "
-                                                                                    value="new"
-                                                                                />
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-3"
-                                                                            >
-                                                                                <input
-                                                                                    type="submit"
-                                                                                    name="status"
-                                                                                    class="fs-7 fw-semibold text-reset dropdown-usermenu-item form-control text-center"
-                                                                                    style="
-                                                                                        height: 25px;
-                                                                                        font-size: 10px;
-                                                                                        transition: 0.5s;
-                                                                                        border: 2px
-                                                                                            solid
-                                                                                            #f1f5f9;
-                                                                                    "
-                                                                                    value="inproccess"
-                                                                                />
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-3"
-                                                                            >
-                                                                                <input
-                                                                                    type="submit"
-                                                                                    name="status"
-                                                                                    class="fs-7 fw-semibold text-reset dropdown-usermenu-item form-control text-center"
-                                                                                    style="
-                                                                                        height: 25px;
-                                                                                        font-size: 10px;
-                                                                                        transition: 0.5s;
-                                                                                        border: 2px
-                                                                                            solid
-                                                                                            #f1f5f9;
-                                                                                    "
-                                                                                    value="success"
-                                                                                />
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-3"
-                                                                            >
-                                                                                <input
-                                                                                    type="submit"
-                                                                                    name="status"
-                                                                                    class="fs-7 fw-semibold text-reset dropdown-usermenu-item form-control text-center"
-                                                                                    style="
-                                                                                        height: 25px;
-                                                                                        font-size: 10px;
-                                                                                        transition: 0.5s;
-                                                                                        border: 2px
-                                                                                            solid
-                                                                                            #f1f5f9;
-                                                                                    "
-                                                                                    value="declined"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>$order->payment</td>
-                                                        <td>
-                                                            $order->declinedTed
-
-                                                            <div class="d-flex">
-                                                                <input
-                                                                    type="text"
-                                                                    class="form-control mb-3"
-                                                                    name="declinedTed"
-                                                                    value=""
-                                                                />
-
-                                                                <input
-                                                                    type="submit"
-                                                                    name="status"
-                                                                    class="fw-semibold btn-fill text-center"
-                                                                    style="
-                                                                        height: 40px;
-                                                                        margin-left: 10px;
-                                                                    "
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#declinedform"
-                                                                    value="declined"
-                                                                />
-                                                            </div>
-
-                                                            <div
-                                                                class="alert alert-danger"
+                                                                    <path
+                                                                        stroke="none"
+                                                                        d="M0 0h24v24H0z"
+                                                                        fill="none"
+                                                                    />
+                                                                    <path
+                                                                        d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+                                                                    />
+                                                                    <path
+                                                                        d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+                                                                    />
+                                                                    <path
+                                                                        d="M16 5l3 3"
+                                                                    />
+                                                                </svg>
+                                                            </a>
+                                                            <a
+                                                                href=""
+                                                                @click.prevent="
+                                                                    deleteIngredient(
+                                                                        ingredient.id,
+                                                                    )
+                                                                "
+                                                                class="text-reset"
                                                             >
-                                                                $message
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </form>
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    stroke-width="2"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+                                                                >
+                                                                    <path
+                                                                        stroke="none"
+                                                                        d="M0 0h24v24H0z"
+                                                                        fill="none"
+                                                                    />
+                                                                    <path
+                                                                        d="M4 7l16 0"
+                                                                    />
+                                                                    <path
+                                                                        d="M10 11l0 6"
+                                                                    />
+                                                                    <path
+                                                                        d="M14 11l0 6"
+                                                                    />
+                                                                    <path
+                                                                        d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                                                    />
+                                                                    <path
+                                                                        d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                                                    />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -641,18 +653,69 @@ export default {
         return {
             categoryName: null,
             categoryDescription: null,
+            recipeName: null,
+            recipeDescription: null,
+            category: null,
+            cooktime: null,
+            difficulty: null,
+            photo: null,
+            recipeCategory: null,
+            ingredientName: null,
+            ingredientUnit: null,
             errors: {},
             categories: [],
+            recipes: [],
+            ingredients: [],
         };
     },
     mounted() {
         this.getCategories();
+        this.getRecipes();
+        this.getIngredients();
     },
     methods: {
-        getCategories(){
-            this.server('category').then((result)=>{
-                this.categories = result;
-            })
+        newRecipe() {
+            let formdata = new FormData();
+            if (this.recipeName) formdata.append('title', this.recipeName);
+            if (this.category) formdata.append('category', this.category);
+            if (this.recipeDescription)
+                formdata.append('recipe_description', this.recipeDescription);
+            if (this.cooktime) formdata.append('cook_time', this.cooktime);
+            if (this.difficulty) formdata.append('difficulty', this.difficulty);
+            let photo = document.querySelector('#formFile');
+            if (photo.files[0]) {
+                formdata.append('photo', photo.files[0]);
+            }
+            this.server('recipe', 'POST', formdata)
+                .then((result) => {
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    }
+
+                    if (result.message == 'ok') {
+                        this.recipeName = null;
+                        this.recipeDescription = null;
+                        this.category = null;
+                        this.cooktime = null;
+                        this.difficulty = null;
+                        this.photo = null;
+                        this.getRecipes();
+                    }
+                })
+                .catch((error) => console.log('error', error));
+        },
+        getRecipes() {
+            this.server('recipe').then((result) => {
+                this.recipes = result;
+                console.log(result);
+            });
+        },
+        deleteRecipe(recipe) {
+            this.server('recipe/' + recipe, 'DELETE').then((result) => {
+                if (result) {
+                    this.getRecipes();
+                }
+            });
         },
         newCategory() {
             let formdata = new FormData();
@@ -663,9 +726,53 @@ export default {
                 if (result) {
                     this.categoryName = null;
                     this.categoryDescription = null;
+                    this.getCategories();
                 }
                 if (result.errors) {
                     this.errors = result.errors;
+                }
+            });
+        },
+        getCategories() {
+            this.server('category').then((result) => {
+                this.categories = result;
+            });
+        },
+        deleteCategory(category) {
+            this.server('category/' + category, 'DELETE').then((result) => {
+                if (result) {
+                    this.getCategories();
+                    this.getRecipes();
+                }
+            });
+        },
+        newIngredient() {
+            let formdata = new FormData();
+            if (this.ingredientName)
+                formdata.append('ingredient_name', this.ingredientName);
+            if (this.ingredientUnit)
+                formdata.append('unit', this.ingredientUnit);
+            this.server('ingredient', 'POST', formdata).then((result) => {
+                if (result) {
+                    console.log(result);
+                    this.ingredientName = null;
+                    this.ingredientUnit = null;
+                    this.getIngredients();
+                }
+                if (result.errors) {
+                    this.errors = result.errors;
+                }
+            });
+        },
+        getIngredients() {
+            this.server('ingredient').then((result) => {
+                this.ingredients = result;
+            });
+        },
+        deleteIngredient(ingredient) {
+            this.server('ingredient/' + ingredient, 'DELETE').then((result) => {
+                if (result) {
+                    this.getIngredients();
                 }
             });
         },

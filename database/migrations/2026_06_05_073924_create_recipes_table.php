@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('description');
+            $table->string('recipe_description');
             $table->integer('cook_time');
             $table->enum('difficulty', ['Легко', 'Средне', 'Сложно'])->default('Средне');
             $table->string('photo');

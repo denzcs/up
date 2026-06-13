@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('recipe_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('step_number');
             $table->string('description');
-            $table->string('image_url');
+            $table->string('image');
             $table->timestamps();
         });
     }

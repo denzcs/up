@@ -13,7 +13,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Ingredient::all());
     }
 
     /**
@@ -29,7 +29,10 @@ class IngredientController extends Controller
      */
     public function store(StoreIngredientRequest $request)
     {
-        //
+        return response()->json(Ingredient::create([
+            'name' => $request->ingredient_name,
+            'unit' => $request->unit,
+        ]));
     }
 
     /**
@@ -61,6 +64,6 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        return response()->json($ingredient->delete());
     }
 }
