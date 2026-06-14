@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\RecipeStepController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -14,31 +15,42 @@ Route::middleware(['auth:sanctum'])->group(function(){
         return $request->user();
     });
     Route::post("/logout", [AuthController::class, "logout"]);
-    Route::post("/favorite/{id}", [FavoriteController::class, "create"]);
-    Route::get("/favoriteDelete/{id}", [FavoriteController::class, "destroy"]);
-    Route::get("/favoritesUser", [FavoriteController::class, "show"]);
-    Route::post("/ingredient", [IngredientController::class, "store"]);
+    // Route::post("/favorite/{id}", [FavoriteController::class, "create"]);
+    // Route::get("/favoriteDelete/{id}", [FavoriteController::class, "destroy"]);
+    // Route::get("/favoritesUser", [FavoriteController::class, "show"]);
+    
     Route::post("/category", [CategoryController::class, "store"]);
+    Route::delete("/category/{category}", [CategoryController::class, "destroy"]);
+
     Route::post("/recipe", [RecipeController::class, "store"]);
     Route::post("/recipe/{recipe}", [RecipeController::class, "update"]);
     Route::delete("/recipe/{recipe}", [RecipeController::class, "destroy"]);
+
+    Route::post("/ingredient", [IngredientController::class, "store"]);
     Route::delete("/ingredient/{ingredient}", [IngredientController::class, "destroy"]);
     Route::get("/ingredient/{ingredient}", [IngredientController::class, "show"]);
     Route::post("/ingredient/{ingredient}", [IngredientController::class, "update"]);
+
     Route::post("/recipeIngredient", [IngredientController::class, "storeRecipeIngredient"]);
     Route::get("/recipeIngredient/{recipe}", [IngredientController::class, "indexRecipeIngredient"]);
     Route::delete("/recipeIngredient/{recipeIngredient}", [IngredientController::class, "destroyRecipeIngredient"]);
-    Route::delete("/category/{category}", [CategoryController::class, "destroy"]);
-    Route::post('/UserStep/{recipe_id}', [UserController::class, 'UserStep']);
+
+    Route::get("/step/{step}", [RecipeStepController::class, "show"]);
+    Route::post('/step/{recipe}', [RecipeStepController::class, 'store']);
+    Route::post('/stepUpdate/{step}', [RecipeStepController::class, 'update']);
+    Route::delete("/step/{step}", [RecipeStepController::class, "destroy"]);
+    Route::post('/stepNumberUpdate/{step}', [RecipeStepController::class, 'stepNumberUpdate']);
     Route::get('/LoadStep/{recipe_id}', [UserController::class, 'LoadStep']);
 });
 Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
+
+Route::get("/category", [CategoryController::class, "index"]);
+
 Route::get("/recipe", [RecipeController::class, "index"]);
 Route::get("/recipe/{recipe}", [RecipeController::class, "show"]);
 
-Route::get("/category", [CategoryController::class, "index"]);
+
 Route::get("/ingredient", [IngredientController::class, "index"]);
-// Route::get("/category/{category}", [CategoryController::class, "show"]);
-Route::get("/recipeDetail/{id}", [RecipeController::class, "recipeDetail"]);
+
 Route::get('/recipeIngredient/{recipe_id}', [IngredientController::class, 'getRecipeIngredient']);

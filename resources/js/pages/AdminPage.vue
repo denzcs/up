@@ -469,8 +469,8 @@
                                                             class="d-flex align-items-center"
                                                         >
                                                             <a
-                                                                href=""
-                                                                @click.prevent="
+                                                                href="#header"
+                                                                @click="
                                                                     changePage(
                                                                         'EditPage',
                                                                         recipe.id,

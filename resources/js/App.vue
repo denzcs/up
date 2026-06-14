@@ -8,6 +8,7 @@
         :PUBLIC="PUBLIC"
         :user="user"
         :class="{'mb-3': page!='HomePage'}"
+        id="header"
     />
     <!-- <NavBarComponent /> -->
     <HomePage

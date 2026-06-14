@@ -10,10 +10,10 @@ class StoreRecipeStepRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    // public function authorize(): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,7 +23,9 @@ class StoreRecipeStepRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'step_number',
+            "description"=>"required|min:3",
+            "photo"=>"image",
         ];
     }
 }
