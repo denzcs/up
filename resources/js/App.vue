@@ -10,28 +10,24 @@
         :class="{'mb-3': page!='HomePage'}"
         id="header"
     />
-    <!-- <NavBarComponent /> -->
     <HomePage
         v-if="page == 'HomePage'"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
         :server="server"
         :user="user"
-        :getCategories="getCategories"
     />
     <AdminPage
         v-if="page == 'AdminPage'"
         :server="server"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
-        :getCategories="getCategories"
     />
     <EditPage
         v-if="page == 'EditPage'"
         :server="server"
         :changePage="changePage"
         :PUBLIC="PUBLIC"
-        :getCategories="getCategories"
         :pageId="pageId"
     />
     <!-- <CategoriePage

@@ -47,6 +47,7 @@ Route::post("/login", [AuthController::class, "login"]);
 
 Route::get("/category", [CategoryController::class, "index"]);
 
+Route::post("/recipes", [RecipeController::class, "Homerecipes"]);
 Route::get("/recipe", [RecipeController::class, "index"]);
 Route::get("/recipe/{recipe}", [RecipeController::class, "show"]);
 

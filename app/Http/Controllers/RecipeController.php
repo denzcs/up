@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,27 @@ class RecipeController extends Controller
     public function index()
     {
         return response()->json(Recipe::with('category')->get());
+    }
+
+    public function Homerecipes(Request $request)
+    {
+        $sort = json_decode($request->sort);
+        return response()->json(Recipe::with('category')->where(function ($query) use ($request) {
+            if ($request->categories) {
+                $cat = json_decode($request->categories);
+                $query->whereIn('category_id', $cat);
+            }
+            if ($request->difficulty) {
+                $query->where('difficulty', $request->difficulty);
+            }
+            if ($request->selectTime) {
+                $time = json_decode($request->selectTime);
+                $query->whereBetween('cook_time', $time);
+            }
+            if ($request->search) {
+                $query->whereLike('name', '%' . $request->search . '%');
+            }
+        })->orderBy($sort->field, $sort->by)->paginate(3));
     }
 
     /**
