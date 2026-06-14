@@ -35,10 +35,10 @@ class IngredientController extends Controller
      */
     public function store(StoreIngredientRequest $request)
     {
-        return response()->json(Ingredient::create([
+        return response()->json(['message' => 'ok',Ingredient::create([
             'name' => $request->ingredient_name,
             'unit' => $request->unit,
-        ]));
+        ])]);
     }
     public function storeRecipeIngredient(RecipeIngredientRequest $request)
     {
@@ -74,7 +74,7 @@ class IngredientController extends Controller
         $ingredient->name=$request->ingredient_name;
         $ingredient->unit=$request->unit;
         $ingredient->save();
-        return response()->json($ingredient);
+        return response()->json(['message' => 'ok',$ingredient]);
     }
 
     /**

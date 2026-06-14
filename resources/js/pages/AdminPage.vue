@@ -129,10 +129,20 @@
                                 <div class="col-12">
                                     <button
                                         @click="newRecipe()"
-                                        class="btn-fill fw-semibold"
+                                        class="btn-fill fw-semibold mb-3"
                                     >
                                         Отправить
                                     </button>
+                                    <div
+                                        v-if="message.recipe"
+                                        class="alert alert-success d-flex align-items-center"
+                                        :class="{ fade: true, show: showAlert }"
+                                        role="alert"
+                                        style="width: 35%"
+                                    >
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>Рецепт успешно добавлен</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,10 +190,20 @@
                                 <div class="col-12">
                                     <button
                                         @click="newCategory()"
-                                        class="btn-fill fw-semibold"
+                                        class="btn-fill fw-semibold mb-3"
                                     >
                                         Отправить
                                     </button>
+                                    <div
+                                        v-if="message.category"
+                                        class="alert alert-success d-flex align-items-center"
+                                        :class="{ fade: true, show: showAlert }"
+                                        role="alert"
+                                        style="width: 35%"
+                                    >
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>Категория успешно добавлена</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,7 +211,14 @@
                 </div>
                 <div class="col-12" id="indredientCreateForm">
                     <div class="colform mb-5">
-                        <h2 class="fw-bold">{{this.ingredientUpdateId?'Изменить':'Добавить'}} ингредиент</h2>
+                        <h2 class="fw-bold">
+                            {{
+                                this.ingredientUpdateId
+                                    ? 'Изменить'
+                                    : 'Добавить'
+                            }}
+                            ингредиент
+                        </h2>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 col-lg-6 mb-3">
@@ -231,11 +258,29 @@
                                 </div>
                                 <div class="col-12">
                                     <button
-                                        @click="this.ingredientUpdateId?updateIngredient(this.ingredientUpdateId):newIngredient()"
-                                        class="btn-fill fw-semibold"
+                                        @click="
+                                            this.ingredientUpdateId
+                                                ? updateIngredient(
+                                                      this.ingredientUpdateId,
+                                                  )
+                                                : newIngredient()
+                                        "
+                                        class="btn-fill fw-semibold mb-3"
                                     >
                                         Отправить
                                     </button>
+                                    <div
+                                        v-if="message.ingredient"
+                                        class="alert alert-success d-flex align-items-center"
+                                        :class="{ fade: true, show: showAlert }"
+                                        role="alert"
+                                        style="width: 35%"
+                                    >
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>
+                                            {{ message.ingredient }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -425,7 +470,12 @@
                                                         >
                                                             <a
                                                                 href=""
-                                                                @click.prevent="changePage('EditPage', recipe.id)"
+                                                                @click.prevent="
+                                                                    changePage(
+                                                                        'EditPage',
+                                                                        recipe.id,
+                                                                    )
+                                                                "
                                                                 style="
                                                                     margin-right: 5px;
                                                                 "
@@ -556,7 +606,11 @@
                                                         >
                                                             <a
                                                                 href="#categoryCreateForm"
-                                                                @click="updateIngredientForm(ingredient.id)"
+                                                                @click="
+                                                                    updateIngredientForm(
+                                                                        ingredient.id,
+                                                                    )
+                                                                "
                                                                 style="
                                                                     margin-right: 5px;
                                                                 "
@@ -666,9 +720,11 @@ export default {
             ingredientUnit: null,
             ingredientUpdateId: null,
             errors: {},
+            message: {},
             recipes: [],
             ingredients: [],
             categories: [],
+            showAlert: true,
         };
     },
     mounted() {
@@ -696,6 +752,15 @@ export default {
                     }
 
                     if (result.message == 'ok') {
+                        this.message.recipe = result.message;
+                        setTimeout(() => {
+                            this.showAlert = false;
+                            setTimeout(() => {
+                                this.message.recipe = null;
+                                this.showAlert = true;
+                            }, 200);
+                        }, 5000);
+
                         this.recipeName = null;
                         this.recipeDescription = null;
                         this.category = null;
@@ -726,7 +791,15 @@ export default {
             if (this.categoryDescription)
                 formdata.append('description', this.categoryDescription);
             this.server('category', 'POST', formdata).then((result) => {
-                if (result) {
+                if (result.message == 'ok') {
+                    this.message.category = result.message;
+                    setTimeout(() => {
+                        this.showAlert = false;
+                        setTimeout(() => {
+                            this.message.category = null;
+                            this.showAlert = true;
+                        }, 200);
+                    }, 5000);
                     this.categoryName = null;
                     this.categoryDescription = null;
                     this.getCategories();
@@ -756,7 +829,15 @@ export default {
             if (this.ingredientUnit)
                 formdata.append('unit', this.ingredientUnit);
             this.server('ingredient', 'POST', formdata).then((result) => {
-                if (result) {
+                if (result.message == 'ok') {
+                    this.message.ingredient = 'Ингредиент успешно добавлен';
+                    setTimeout(() => {
+                        this.showAlert = false;
+                        setTimeout(() => {
+                            this.message.ingredient = null;
+                            this.showAlert = true;
+                        }, 200);
+                    }, 5000);
                     console.log(result);
                     this.ingredientName = null;
                     this.ingredientUnit = null;
@@ -773,19 +854,23 @@ export default {
                 formdata.append('ingredient_name', this.ingredientName);
             if (this.ingredientUnit)
                 formdata.append('unit', this.ingredientUnit);
-            this.server('ingredient/'+ingredient, 'POST', formdata).then((result) => {
-                if (result) {
-                    this.ingredientName = null;
-                    this.ingredientUnit = null;
-                    this.getIngredients();
-                }
-                if (result.errors) {
-                    this.errors = result.errors;
-                }
-            });
+            this.server('ingredient/' + ingredient, 'POST', formdata).then(
+                (result) => {
+                    if (result.message == 'ok') {
+                        this.message.ingredient = 'Ингредиент успешно изменён';
+                        this.ingredientName = null;
+                        this.ingredientUnit = null;
+                        this.ingredientUpdateId = null;
+                        this.getIngredients();
+                    }
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    }
+                },
+            );
         },
         updateIngredientForm(ingredient) {
-            this.server('ingredient/'+ingredient).then((result) => {
+            this.server('ingredient/' + ingredient).then((result) => {
                 if (result) {
                     console.log(result);
                     this.ingredientUpdateId = result.id;

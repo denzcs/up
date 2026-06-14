@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="colform mb-5">
-                        <h2 class="fw-bold">Добавить рецепт</h2>
+                        <h2 class="fw-bold">Редактировать рецепт</h2>
 
                         <div class="container">
                             <div class="row">
@@ -135,10 +135,20 @@
                                 <div class="col-12">
                                     <button
                                         @click="updateRecipe(recipe.id)"
-                                        class="btn-fill fw-semibold"
+                                        class="btn-fill fw-semibold mb-3"
                                     >
                                         обновить
                                     </button>
+                                    <div
+                                        v-if="message.recipe"
+                                        class="alert alert-success d-flex align-items-center"
+                                        :class="{ fade: true, show: showAlert }"
+                                        role="alert"
+                                        style="width: 35%"
+                                    >
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>Рецепт успешно изменен</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -186,10 +196,20 @@
                                 <div class="col-12">
                                     <button
                                         @click="recipeIngredient"
-                                        class="btn-fill fw-semibold"
+                                        class="btn-fill fw-semibold mb-3"
                                     >
                                         Добавить
                                     </button>
+                                    <div
+                                        v-if="message.recipeIngredient"
+                                        class="alert alert-success d-flex align-items-center"
+                                        :class="{ fade: true, show: showAlert }"
+                                        role="alert"
+                                        style="width: 35%"
+                                    >
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>Ингредиент успешно добавлен</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +218,7 @@
                 <div class="col-12">
                     <div class="colform mb-5">
                         <div class="title" id="allOrders">
-                            <h2 class="fw-bold">Все Ингредиенты</h2>
+                            <h2 class="fw-bold">Добавленные ингредиенты</h2>
                         </div>
 
                         <div class="container">
@@ -322,8 +342,10 @@ export default {
             recipe_ingredients: [],
             ingredient: null,
             errors: {},
+            message: {},
             categories: [],
             ingredients: [],
+            showAlert: true,
         };
     },
     mounted() {
@@ -345,7 +367,14 @@ export default {
                         console.log(result.errors);
                     }
                     if (result.message == 'ok') {
-                        console.log(result);
+                        this.message.recipeIngredient = result.message;
+                        setTimeout(() => {
+                            this.showAlert = false;
+                            setTimeout(() => {
+                                this.message.recipeIngredient = null;
+                                this.showAlert = true;
+                            }, 200);
+                        }, 5000);
                         this.getIngredientsRecipe();
                     }
                 })
@@ -355,7 +384,6 @@ export default {
             this.server('recipeIngredient/' + this.pageId)
                 .then((result) => {
                     this.recipe_ingredients = result;
-                    console.log(result);
                 })
                 .catch((error) => console.log('error', error));
         },
@@ -392,6 +420,15 @@ export default {
                     }
 
                     if (result.message == 'ok') {
+                        console.log(result.message);
+                        this.message.recipe = result.message;
+                        setTimeout(() => {
+                            this.showAlert = false;
+                            setTimeout(() => {
+                                this.message.recipe = null;
+                                this.showAlert = true;
+                            }, 200);
+                        }, 5000);
                         this.getRecipe(this.pageId);
                     }
                 })
@@ -402,7 +439,6 @@ export default {
                 this.recipe = result;
                 this.selectedCategory = result.category.id;
                 this.difficulty = result.difficulty;
-                console.log(this.recipe);
             });
         },
         getCategories() {
