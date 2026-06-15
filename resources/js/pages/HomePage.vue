@@ -220,7 +220,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button href="" class="btn-fill fw-semibold">
+                                <button @click="changePage('RecipePage', recipe.id)" class="btn-fill fw-semibold">
                                     Смотреть рецепт
                                 </button>
                             </div>

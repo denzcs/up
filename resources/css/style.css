@@ -96,7 +96,9 @@ section {
     background: #7CD2FD;
     background: linear-gradient(90deg, rgba(124, 210, 253, 1) 0%, rgba(112, 168, 224, 1) 40%, rgba(89, 129, 222, 1) 73%, rgba(164, 89, 222, 1) 100%);
 }
-
+footer section {
+    padding: 35px 0;
+}
 section h1 {
     color: #fff;
 }

@@ -576,7 +576,7 @@
 </template>
 <script>
 export default {
-    name: 'AdminPage',
+    name: 'EditPage',
     props: ['server', 'changePage', 'PUBLIC', 'pageId'],
     data() {
         return {

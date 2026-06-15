@@ -7,29 +7,43 @@
         :changePage="changePage"
         :PUBLIC="PUBLIC"
         :user="user"
-        :class="{'mb-3': page!='HomePage'}"
+        :class="{ 'mb-3': page != 'HomePage' }"
         id="header"
     />
-    <HomePage
-        v-if="page == 'HomePage'"
-        :changePage="changePage"
-        :PUBLIC="PUBLIC"
-        :server="server"
-        :user="user"
-    />
-    <AdminPage
-        v-if="page == 'AdminPage'"
-        :server="server"
-        :changePage="changePage"
-        :PUBLIC="PUBLIC"
-    />
-    <EditPage
-        v-if="page == 'EditPage'"
-        :server="server"
-        :changePage="changePage"
-        :PUBLIC="PUBLIC"
-        :pageId="pageId"
-    />
+    <template v-if="isLoad">
+        <HomePage
+            v-if="page == 'HomePage'"
+            :changePage="changePage"
+            :PUBLIC="PUBLIC"
+            :server="server"
+            :user="user"
+        />
+        <AdminPage
+            v-if="page == 'AdminPage'"
+            :server="server"
+            :changePage="changePage"
+            :PUBLIC="PUBLIC"
+        />
+        <EditPage
+            v-if="page == 'EditPage'"
+            :server="server"
+            :changePage="changePage"
+            :PUBLIC="PUBLIC"
+            :pageId="pageId"
+        />
+        <RecipePage
+            v-if="page == 'RecipePage'"
+            :changePage="changePage"
+            :PUBLIC="PUBLIC"
+            :server="server"
+            :isUser="isUser"
+            :pageId="pageId"
+        />
+    </template>
+
+    <template v-else>
+        <h1>ЗАГРУЗКА...</h1>
+    </template>
     <!-- <CategoriePage
         v-if="page == 'CategoriePage'"
         :changePage="changePage"
@@ -60,7 +74,7 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import AdminPage from './pages/AdminPage.vue';
 import EditPage from './pages/EditPage.vue';
 import HomePage from './pages/HomePage.vue';
-
+import RecipePage from './pages/RecipePage.vue';
 
 export default {
     name: 'App',
@@ -71,6 +85,7 @@ export default {
             API: 'http://127.0.0.1:8000/api/',
             PUBLIC: 'http://127.0.0.1:8000/storage/',
             isUser: false,
+            isLoad: false,
             user: {},
         };
     },
@@ -86,6 +101,7 @@ export default {
                 .then((result) => {
                     this.user = result;
                     this.isUser = true;
+                    this.isLoad = true;
                     // console.log(this.user);
                 })
                 .catch((error) => console.error(error));
@@ -94,6 +110,7 @@ export default {
             localStorage.setItem('token', token);
             this.isUser = true;
             this.getUser();
+            
         },
         logout() {
             localStorage.removeItem('token');
@@ -101,6 +118,7 @@ export default {
             localStorage.removeItem('pageId');
             this.user = {};
             this.isUser = false;
+            this.isLoad = true;
         },
         getCategories() {
             this.server('category').then((result) => {
@@ -145,10 +163,13 @@ export default {
         FooterComponent,
         AdminPage,
         EditPage,
+        RecipePage,
     },
     mounted() {
         if (localStorage.getItem('token')) {
             this.getUser();
+        } else {
+            this.isLoad = true;
         }
     },
 };

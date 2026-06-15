@@ -40,7 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/stepUpdate/{step}', [RecipeStepController::class, 'update']);
     Route::delete("/step/{step}", [RecipeStepController::class, "destroy"]);
     Route::post('/stepNumberUpdate/{step}', [RecipeStepController::class, 'stepNumberUpdate']);
-    Route::get('/LoadStep/{recipe_id}', [UserController::class, 'LoadStep']);
+    Route::get('/LoadStep/{recipe}', [UserController::class, 'LoadStep']);
+    Route::post('/UserStep/{recipe}', [UserController::class, 'UserStep']);
 });
 Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
