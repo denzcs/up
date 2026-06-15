@@ -35,7 +35,7 @@ class RecipeController extends Controller
                 $query->whereBetween('cook_time', $time);
             }
             if ($request->search) {
-                $query->whereLike('name', '%' . $request->search . '%');
+                $query->whereLike('title', '%' . $request->search . '%');
             }
         })->orderBy($sort->field, $sort->by)->paginate(3));
     }
