@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
+
+use App\Models\Recipe;
 use App\Http\Requests\StoreFavoriteRequest;
 use App\Http\Requests\UpdateFavoriteRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Favorite;
 
 class FavoriteController extends Controller
 {
@@ -19,9 +22,18 @@ class FavoriteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Recipe $recipe)
     {
-        //
+        
+        $favorite = Favorite::where('recipe_id', $recipe->id)->where('user_id', Auth::id())->first();
+        if ($favorite) {
+            $favorite->delete();
+            $isLiked = false;
+        } else {
+            Favorite::create(['user_id' => Auth::id(), 'recipe_id' => $recipe->id]);
+            $isLiked = true;
+        }
+        return response()->json([Favorite::where('recipe_id', $recipe->id)->where('user_id', Auth::id())->first(),'isLike'=>$isLiked]);
     }
 
     /**
@@ -35,9 +47,10 @@ class FavoriteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Favorite $favorite)
+    public function show()
     {
-        //
+
+        return response()->json(Favorite::where('user_id', Auth::user()->id)->with('recipe.category')->paginate(3));
     }
 
     /**

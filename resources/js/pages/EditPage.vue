@@ -782,10 +782,10 @@ export default {
         },
         getRecipe(recipe) {
             this.server('recipe/' + recipe).then((result) => {
-                console.log(result.steps);
-                this.recipe = result;
-                this.selectedCategory = result.category.id;
-                this.difficulty = result.difficulty;
+                console.log(result.recipe.steps);
+                this.recipe = result.recipe;
+                this.selectedCategory = result.recipe.category.id;
+                this.difficulty = result.recipe.difficulty;
             });
         },
         getCategories() {

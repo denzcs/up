@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Favorite;
 
 class RecipeController extends Controller
 {
@@ -61,7 +63,7 @@ class RecipeController extends Controller
         $recipe->difficulty = $request->difficulty;
         $photo = Storage::disk("public")->putFile('/images', $request->photo);
         $recipe->photo = $photo;
-        $recipe->save(); 
+        $recipe->save();
         return response()->json(['message' => 'ok', 'id' => $recipe->id, $recipe]);
     }
 
@@ -70,8 +72,16 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        $recipe = Recipe::where('id',$recipe->id)->with(['category','steps'])->first();
-        return response()->json($recipe);
+        $recipe = Recipe::where('id', $recipe->id)->with(['category', 'steps'])->first();
+        $isLiked = false;
+        if (auth::user()) {
+            $favorite = Favorite::where('recipe_id', $recipe->id)->where('user_id', Auth::id())->first();
+            
+            if ($favorite) {
+                $isLiked = true;
+            }
+        }
+        return response()->json(['recipe' => $recipe, 'isLike' => $isLiked]);
     }
 
     /**
@@ -96,7 +106,7 @@ class RecipeController extends Controller
             $photo = Storage::disk("public")->putFile('/images', $request->photo);
             $recipe->photo = $photo;
         }
-        $recipe->save(); 
+        $recipe->save();
         return response()->json(['message' => 'ok', $recipe]);
     }
 

@@ -39,6 +39,14 @@
             :isUser="isUser"
             :pageId="pageId"
         />
+        <UserPage
+            v-if="page == 'UserPage'"
+            :changePage="changePage"
+            :PUBLIC="PUBLIC"
+            :server="server"
+            :user="user"
+
+        />
     </template>
 
     <template v-else>
@@ -75,6 +83,7 @@ import AdminPage from './pages/AdminPage.vue';
 import EditPage from './pages/EditPage.vue';
 import HomePage from './pages/HomePage.vue';
 import RecipePage from './pages/RecipePage.vue';
+import UserPage from './pages/UserPage.vue';
 
 export default {
     name: 'App',
@@ -164,6 +173,7 @@ export default {
         AdminPage,
         EditPage,
         RecipePage,
+        UserPage,
     },
     mounted() {
         if (localStorage.getItem('token')) {

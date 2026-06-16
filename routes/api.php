@@ -15,14 +15,14 @@ Route::middleware(['auth:sanctum'])->group(function(){
         return $request->user();
     });
     Route::post("/logout", [AuthController::class, "logout"]);
-    // Route::post("/favorite/{id}", [FavoriteController::class, "create"]);
-    // Route::get("/favoriteDelete/{id}", [FavoriteController::class, "destroy"]);
-    // Route::get("/favoritesUser", [FavoriteController::class, "show"]);
+    Route::post("/favorite/{recipe}", [FavoriteController::class, "create"]);
+    Route::get("/favoritesUser", [FavoriteController::class, "show"]);
     
     Route::post("/category", [CategoryController::class, "store"]);
     Route::delete("/category/{category}", [CategoryController::class, "destroy"]);
 
     Route::post("/recipe", [RecipeController::class, "store"]);
+    Route::get("/recipe/{recipe}", [RecipeController::class, "show"]);
     Route::post("/recipe/{recipe}", [RecipeController::class, "update"]);
     Route::delete("/recipe/{recipe}", [RecipeController::class, "destroy"]);
 
@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post("/ingredient/{ingredient}", [IngredientController::class, "update"]);
 
     Route::post("/recipeIngredient", [IngredientController::class, "storeRecipeIngredient"]);
-    Route::get("/recipeIngredient/{recipe}", [IngredientController::class, "indexRecipeIngredient"]);
+    
     Route::delete("/recipeIngredient/{recipeIngredient}", [IngredientController::class, "destroyRecipeIngredient"]);
 
     Route::get("/step/{step}", [RecipeStepController::class, "show"]);
@@ -50,9 +50,10 @@ Route::get("/category", [CategoryController::class, "index"]);
 
 Route::post("/recipes", [RecipeController::class, "Homerecipes"]);
 Route::get("/recipe", [RecipeController::class, "index"]);
-Route::get("/recipe/{recipe}", [RecipeController::class, "show"]);
 
+Route::get("/recipeWOAuth/{recipe}", [RecipeController::class, "show"]);
 
 Route::get("/ingredient", [IngredientController::class, "index"]);
 
-Route::get('/recipeIngredient/{recipe_id}', [IngredientController::class, 'getRecipeIngredient']);
+
+Route::get("/recipeIngredient/{recipe}", [IngredientController::class, "indexRecipeIngredient"]);

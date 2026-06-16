@@ -3,7 +3,7 @@
         <div class="container header">
             <div class="row d-flex justify-content-lg-between justify-content-center">
                 <div class="col-lg-3 col-12 mb-lg-0 mb-3 text-center text-lg-start">
-                    <a href="" @click.prevent="changePage('HomePage')" class="fs-1 text-decoration-none" style="color: #67B7DF;">RecipeLib</a>
+                    <a href="" @click.prevent="changePage('HomePage')" class="fs-1 text-decoration-none" style="color: #67B7DF;">CookHelper</a>
                 </div>
                 
                 <div class="col-lg-3 col-12 d-flex justify-content-center justify-content-lg-end align-items-center">
@@ -23,7 +23,7 @@
                             <span class="droparrow">▼</span>
                         </div>
                         <div class="dropdown-usermenu d-flex flex-column justify-content-around">
-                            <a href="" @click.prevent="changePage('ProfilePave')"
+                            <a href="" @click.prevent="changePage('UserPage')"
                                 class="fs-6 fw-semibold dropdown-usermenu-item">Личный кабинет</a>
                             <a href="" v-if="this.user.role == 'admin'" @click.prevent="changePage('AdminPage')" class="fs-6 fw-semibold dropdown-usermenu-item">Админ
                                 панель</a>

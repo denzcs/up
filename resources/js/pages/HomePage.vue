@@ -1,7 +1,7 @@
 <template>
     <section class="text-center">
         <h1 class="fw-bold fs-1">Сборник рецептов</h1>
-        <h2 class="fw-bold fs-1">"RecipeLib"</h2>
+        <h2 class="fw-bold fs-1">"CookHelper"</h2>
     </section>
     <div class="mainContent">
         <div class="container">
@@ -42,7 +42,7 @@
 
                         <div class="row g-3 border-top pt-3">
                             <div class="col-12 col-sm-4 col-md-3">
-                                <p class="filter-group-label">Категория</p>
+                                <p class="">Категория</p>
                                 <div
                                     v-for="category in categories"
                                     :key="category.id"
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="col-12 col-sm-4 col-md-3">
-                                <p class="filter-group-label">Время</p>
+                                <p class="">Время</p>
                                 <div class="filter-option">
                                     <input
                                         v-model="selectTime"
@@ -113,7 +113,7 @@
                             </div>
 
                             <div class="col-12 col-sm-4 col-md-3">
-                                <p class="filter-group-label">Сложность</p>
+                                <p class="">Сложность</p>
                                 <div class="filter-option">
                                     <input
                                         v-model="selectDif"

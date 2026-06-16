@@ -29,6 +29,23 @@
                                 {{ this.recipe.recipe_description }}
                             </p>
                         </div>
+                        <div class="d-flex m-lg-0 m-3">
+                            <button
+                                v-if="this.isUser"
+                                @click="favorite(this.recipe.id)"
+                                class="btn"
+                                :class="{
+                                    'btn-fill': isLiked == false,
+                                    'btn-outline': isLiked,
+                                }"
+                            >
+                                {{
+                                    this.isLiked
+                                        ? 'удалить из избранного'
+                                        : 'Добавить в избранное'
+                                }}
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -69,18 +86,26 @@
                 <div class="col-12 d-flex colform flex-column m-lg-5">
                     <div class="d-flex mx-auto mb-3 gap-2">
                         <a
-                            v-if="recipe.steps[step]?.step_number != '1'"
+                            v-if="
+                                this.recipe.steps[step]?.step_number != '1' &&
+                                this.recipe.steps.length
+                            "
                             @click.prevent="stepChange('back')"
                             class="btn btn-outline fs-5 m-2"
                             >Назад</a
                         >
                         <h2 class="mb-3">
-                            Шаг {{ this.recipe.steps[step]?.step_number }}
+                            {{
+                                this.recipe.steps?.length
+                                    ? 'Шаг ' +
+                                      this.recipe.steps[step].step_number
+                                    : 'Шаги не найдены'
+                            }}
                         </h2>
                         <a
                             v-if="
-                                recipe.steps[step]?.step_number <=
-                                recipe.steps.length - 1
+                                this.recipe.steps[step]?.step_number <=
+                                this.recipe.steps.length - 1
                             "
                             @click.prevent="stepChange('next')"
                             class="btn btn-outline fs-5 m-2"
@@ -115,6 +140,7 @@ export default {
             category: null,
             errors: {},
             step: 0,
+            isLiked: false,
         };
     },
     props: ['changePage', 'server', 'isUser', 'PUBLIC', 'pageId'],
@@ -124,18 +150,21 @@ export default {
         this.getIngredientsRecipe();
     },
     methods: {
+        favorite(recipe) {
+            this.server('favorite/' + recipe, 'POST')
+                .then((result) => {
+                    this.isLiked = result.isLike;
+                })
+                .catch((error) => console.log('error', error));
+        },
         stepChange(event) {
-            if (event == 'next') {
-                this.step = this.step + 1;
-                if (this.isUser) {
-                    this.UserStep();
-                }
+            if (event == 'next' && this.step < this.recipe.steps.length - 1) {
+                this.step++;
+                if (this.isUser) this.UserStep();
             }
-            if (event == 'back') {
-                this.step = this.step - 1;
-                if (this.isUser) {
-                    this.UserStep();
-                }
+            if (event == 'back' && this.step > 0) {
+                this.step--;
+                if (this.isUser) this.UserStep();
             }
         },
         UserStep() {
@@ -146,27 +175,28 @@ export default {
         LoadStep() {
             this.server('LoadStep/' + this.recipe.id)
                 .then((result) => {
-                    
-                    this.step = result.step_number;
+                    this.step = result?.step_number ?? 0;
                 })
                 .catch((error) => console.log('error', error));
         },
         getRecipe() {
-            this.server('recipe/' + this.pageId)
+            this.server(
+                (this.isUser ? 'recipe/' : 'recipeWOAuth/') + this.pageId,
+            )
                 .then((result) => {
-                    this.recipe = result;
-                    this.category = result.category.name;
-                    if(this.isUser){
+                    this.recipe = result.recipe;
+                    this.category = result.recipe.category.name;
+                    this.isLiked = result.isLike;
+                    console.log(result);
+                    if (this.isUser) {
                         this.LoadStep();
                     }
-                    console.log(this.recipe);
                 })
                 .catch((error) => console.log('error', error));
         },
         getIngredientsRecipe() {
             this.server('recipeIngredient/' + this.pageId).then((result) => {
                 this.recipe_ingredients = result;
-                console.log(this.recipe_ingredients);
             });
         },
     },
