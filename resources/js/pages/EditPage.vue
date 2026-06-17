@@ -766,7 +766,6 @@ export default {
                     }
 
                     if (result.message == 'ok') {
-                        console.log(result.message);
                         this.message.recipe = result.message;
                         setTimeout(() => {
                             this.showAlert = false;
@@ -782,7 +781,6 @@ export default {
         },
         getRecipe(recipe) {
             this.server('recipe/' + recipe).then((result) => {
-                console.log(result.recipe.steps);
                 this.recipe = result.recipe;
                 this.selectedCategory = result.recipe.category.id;
                 this.difficulty = result.recipe.difficulty;

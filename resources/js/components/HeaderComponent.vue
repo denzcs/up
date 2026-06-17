@@ -30,7 +30,7 @@
                             <a href="" @click.prevent="logout()" class="fs-6 fw-semibold dropdown-usermenu-item">Выйти</a>
                         </div>
                     </div>
-                    <div class="d-flex" v-else>
+                    <div class="d-flex" v-if="!isUser">
                         <a href="" role="button" class="btn btn-outline fw-semibold mb-1 mb-lg-0 " data-bs-toggle="modal"
                         data-bs-target='#auth' @click.prevent="regAuthPage('AuthComponent')">Авторизация</a>
                         <a href="" role="button" class="btn btn-fill fw-semibold" data-bs-toggle="modal"

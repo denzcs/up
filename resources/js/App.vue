@@ -52,28 +52,6 @@
     <template v-else>
         <h1>ЗАГРУЗКА...</h1>
     </template>
-    <!-- <CategoriePage
-        v-if="page == 'CategoriePage'"
-        :changePage="changePage"
-        :PUBLIC="PUBLIC"
-        :server="server"
-        :CategoryId="pageId"
-        :isUser="isUser"
-        :user="user"
-    />
-    <ProfilePave
-        v-if="page == 'ProfilePave'"
-        :server="server"
-        :PUBLIC="PUBLIC"
-        :changePage="changePage"
-    />
-    <UserPage
-        v-if="page == 'UserPage'"
-        :server="server"
-        :PUBLIC="PUBLIC"
-        :changePage="changePage"
-        :pageId="pageId"
-    /> -->
     <FooterComponent />
 </template>
 <script>

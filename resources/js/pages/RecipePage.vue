@@ -7,6 +7,7 @@
                         class="colform d-flex productimg align-self-start mb-lg-0 mb-5 justify-self-start"
                     >
                         <img :src="PUBLIC + this.recipe.photo" alt="" />
+                        
                     </div>
                     <div class="colform aboutProduct align-self-start">
                         <div class="d-flex m-lg-0 m-3">
@@ -175,19 +176,18 @@ export default {
         LoadStep() {
             this.server('LoadStep/' + this.recipe.id)
                 .then((result) => {
-                    this.step = result?.step_number ?? 0;
+                    this.step = result.step_number ?? 0;
                 })
                 .catch((error) => console.log('error', error));
         },
         getRecipe() {
             this.server(
-                (this.isUser ? 'recipe/' : 'recipeWOAuth/') + this.pageId,
+                (this.isUser ? 'recipe/' : 'recipeWOAuth/') + this.pageId
             )
                 .then((result) => {
                     this.recipe = result.recipe;
                     this.category = result.recipe.category.name;
                     this.isLiked = result.isLike;
-                    console.log(result);
                     if (this.isUser) {
                         this.LoadStep();
                     }

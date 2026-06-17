@@ -114,11 +114,26 @@
                                     class="col-md-6 col-lg-4 col-12 mb-3"
                                     v-for="recipe in favorites"
                                 >
-                                    <a href="" class="cardcol">
+                                    <a
+                                        href=""
+                                        @click.prevent="
+                                            changePage(
+                                                'RecipePage',
+                                                recipe.recipe?.id,
+                                            )
+                                        "
+                                        class="cardcol"
+                                    >
                                         <div class="card">
                                             <img
-                                                :src="PUBLIC + recipe.recipe?.photo"
-                                                style="width: 500px; height: auto"
+                                                :src="
+                                                    PUBLIC +
+                                                    recipe.recipe?.photo
+                                                "
+                                                style="
+                                                    width: 500px;
+                                                    height: auto;
+                                                "
                                                 class="card-img-top object-fit-fill"
                                                 alt="..."
                                             />
@@ -131,7 +146,10 @@
                                                         <h4
                                                             class="fw-bold text-break text-reset text-start"
                                                         >
-                                                            {{ recipe.recipe?.title }}
+                                                            {{
+                                                                recipe.recipe
+                                                                    ?.title
+                                                            }}
                                                         </h4>
                                                         <div
                                                             class="d-flex align-items-centerjustify-content-between"
@@ -143,7 +161,9 @@
                                                                     class="fw-semibold"
                                                                 >
                                                                     {{
-                                                                        recipe.recipe?.difficulty
+                                                                        recipe
+                                                                            .recipe
+                                                                            ?.difficulty
                                                                     }}
                                                                 </span>
                                                             </div>
@@ -154,7 +174,9 @@
                                                                     class="fw-semibold"
                                                                 >
                                                                     {{
-                                                                        recipe.recipe?.cook_time
+                                                                        recipe
+                                                                            .recipe
+                                                                            ?.cook_time
                                                                     }}
                                                                     мин.
                                                                 </span>
@@ -166,7 +188,10 @@
                                                                     class="fw-semibold"
                                                                 >
                                                                     {{
-                                                                        recipe.recipe?.category?.name
+                                                                        recipe
+                                                                            .recipe
+                                                                            ?.category
+                                                                            ?.name
                                                                     }}
                                                                 </span>
                                                             </div>
@@ -247,7 +272,6 @@ export default {
                     this.favorites = result.data;
                     this.page = result.current_page;
                     this.last_page = result.last_page;
-                    console.log(this.favorites);
                 })
                 .catch((error) => console.log('error', error));
         },

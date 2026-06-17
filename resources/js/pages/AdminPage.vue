@@ -775,7 +775,6 @@ export default {
         getRecipes() {
             this.server('recipe').then((result) => {
                 this.recipes = result;
-                console.log(result);
             });
         },
         deleteRecipe(recipe) {
@@ -838,7 +837,6 @@ export default {
                             this.showAlert = true;
                         }, 200);
                     }, 5000);
-                    console.log(result);
                     this.ingredientName = null;
                     this.ingredientUnit = null;
                     this.getIngredients();
@@ -872,7 +870,6 @@ export default {
         updateIngredientForm(ingredient) {
             this.server('ingredient/' + ingredient).then((result) => {
                 if (result) {
-                    console.log(result);
                     this.ingredientUpdateId = result.id;
                     this.ingredientName = result.name;
                     this.ingredientUnit = result.unit;

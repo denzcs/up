@@ -39,7 +39,7 @@ class RecipeController extends Controller
             if ($request->search) {
                 $query->whereLike('title', '%' . $request->search . '%');
             }
-        })->orderBy($sort->field, $sort->by)->paginate(6));
+        })->orderBy($sort->field, $sort->by)->paginate(3));
     }
 
     /**

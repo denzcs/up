@@ -183,7 +183,7 @@
                     class="col-md-6 col-lg-4 col-12 mb-3"
                     v-for="recipe in recipes"
                 >
-                    <a href="" class="cardcol">
+                    <a href="" @click.prevent="changePage('RecipePage', recipe.id)" class="cardcol">
                         <div class="card">
                             <img
                                 :src="PUBLIC + recipe.photo"
@@ -312,11 +312,11 @@ export default {
                 this.selectDif = null;
                 this.selectTime = null;
                 this.search = null;
+
             }
             this.server('recipes?page=' + page, 'POST', formdata)
                 .then((result) => {
                     this.recipes = result.data;
-                    console.log(this.recipes);
                     this.page = result.current_page;
                     this.last_page = result.last_page;
                 })
